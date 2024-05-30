@@ -1,0 +1,6 @@
+.active{
+  &::before{
+    background: #000;
+    width: 100% !important;
+  }
+}

@@ -1,0 +1,55 @@
+.profile {
+	// background: rgb(184, 184, 184);
+
+	.image--container {
+		width: fit-content;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+		gap: 1rem;
+		@media (max-width: 1024px) {
+			width: 100%;
+		}
+		.photo {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: 50%;
+			img {
+				border-radius: 50%;
+			}
+		}
+		h2 {
+			font-size: 1.25rem;
+			font-weight: 600;
+		}
+	}
+	.item {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 3.5rem;
+		height: 35px;
+		width: 40%;
+		@media (max-width: 1024px) {
+			width: 100%;
+		}
+		@media (max-width:996px) {
+			font-size: 14px;
+		}
+		input {
+			cursor: text;
+			height: 100%;
+			width: 68%;
+			padding: 0 1rem;
+			border: none;
+			outline: none;
+			background: rgba(156, 156, 165, 0.358);
+		}
+		label {
+			font-weight: 600;
+			width: 32%;
+		}
+	}
+}

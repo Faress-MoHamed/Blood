@@ -1,0 +1,14 @@
+.signUpUser {
+		label {
+			// width: 280px;
+      &::after{
+        content: "*" !important;
+        color: red;
+      }
+		}
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+}

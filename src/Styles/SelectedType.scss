@@ -1,0 +1,10 @@
+.selected-type{
+  .button-container{
+    p{
+      transition: 0.4s;
+    }
+    button:hover p{
+      color: rgba(27, 27, 27, 0.532);
+    }
+  }
+}
