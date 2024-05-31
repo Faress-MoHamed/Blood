@@ -26,6 +26,8 @@ function SignIn({ setIsOpen }) {
 		},
 		validationSchema,
 		onSubmit: async (values) => {
+			console.log(values);
+
 			const res = await Sign_In(values);
 			if (res.status === "success") {
 				AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
