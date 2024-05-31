@@ -10,7 +10,7 @@ function Home() {
 				<meta name="description" content="blood Sample" />
 			</Helmet>
 			<main className="pt-[60px]">
-				<section className="hero relative flex justify-center items-center bg-[url(./logo/donation-8937.jpg)] bg-no-repeat after:absolute after:left-0 after:top-0 after:w-full after:h-full after:bg-black/35 h-[92.6vh] bg-cover">
+				<section className="hero relative flex justify-center items-center bg-[url(/logo/donation-8937.jpg)] bg-no-repeat after:absolute after:left-0 after:top-0 after:w-full after:h-full after:bg-black/35 h-[92.6vh] bg-cover">
 					<div className="z-20 container mx-auto flex flex-col items-center gap-11 justify-center h-full px-4 md:px-0">
 						<h2 className="lg:leading-[60px] leading-[40px] text-white md:text-[3rem] text-2xl drop-shadow-lg font-bold  text-center">
 							Connecting Communities,
