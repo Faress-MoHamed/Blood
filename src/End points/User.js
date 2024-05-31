@@ -9,6 +9,8 @@ export const Sign_Up = async (values) => {
 		);
 		return data;
 	} catch (err) {
+		console.log(err);
+
 		toast.error(err.response.data.message, {
 			className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
 		});
@@ -22,6 +24,7 @@ export const Sign_In = async (values) => {
 		);
 		return data;
 	} catch (err) {
+		console.log(err);
 		toast.error(err.response.data.message, {
 			className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
 		});
@@ -35,8 +38,8 @@ export const Reset_password = async (values) => {
 		);
 		return data;
 	} catch (err) {
-				toast.error(err.response.data.message, {
-					className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
-				});
+		toast.error(err.response.data.message, {
+			className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
+		});
 	}
 };
