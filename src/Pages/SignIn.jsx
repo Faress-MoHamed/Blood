@@ -29,6 +29,7 @@ function SignIn({ setIsOpen }) {
 			console.log(values);
 
 			const res = await Sign_In(values);
+			console.log(res);
 			if (res.status === "success") {
 				AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
 				AddToLocalStorage(

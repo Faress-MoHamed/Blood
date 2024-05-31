@@ -44,12 +44,13 @@ function SignUpUser({ setIsOpen }) {
 			confirmPassword: "",
 			country: "",
 			address: "",
-			
 		},
 		validationSchema,
 		onSubmit: async (values) => {
 			console.log(values);
 			const res = await Sign_Up(values);
+			console.log(res);
+
 			if (res.status === "success") {
 				AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
 				AddToLocalStorage(
