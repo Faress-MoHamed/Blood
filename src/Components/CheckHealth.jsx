@@ -1,86 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
 import InputField from "./InputField";
 import { IoIosCloseCircle } from "react-icons/io";
 import Header from "./Header";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { Check_Health } from "../End points/User";
 const CheckHealth = ({ setIsOpen }) => {
+	const [isLoading, setIsLoading] = useState(false);
+	const [result, setResult] = useState(null);
 	const initialValues = {
-		WBC: "",
-		LYMP: "",
-		NEUTp: "",
-		LYMn: "",
-		NEUTn: "",
-		RBC: "",
-		HGB: "",
-		HCT: "",
-		MCV: "",
-		MCH: "",
-		MCHC: "",
-		PLT: "",
-		PDW: "",
-		PCT: "",
+		WBC: 16.7,
+		LYMP: 19.1,
+		NEUTp: 68.2,
+		LYMn: 3.2,
+		NEUTn: 11.4,
+		RBC: 5.15,
+		HGB: 14.2,
+		HCT: 44.8,
+		MCV: 87.1,
+		MCH: 27.5,
+		MCHC: 31.6,
+		PLT: 151,
+		PDW: 12.8,
+		PCT: 0.14,
 	};
 
-	const validationSchema = Yup.object({
-		WBC: Yup.number()
-			.min(4, "wbc must be at least 4")
-			.max(10, "wbc must be at most 10")
-			.required("Required"),
-		LYMP: Yup.number()
-			.min(1, "lymphocytes must be at least 1")
-			.max(4, "lymphocytes must be at most 4")
-			.required("Required"),
-		NEUTp: Yup.number()
-			.min(40, "neutrophils percentage must be at least 40")
-			.max(60, "neutrophils percentage must be at most 60")
-			.required("Required"),
-		LYMn: Yup.number()
-			.min(20, "lymphocytes number must be at least 20")
-			.max(40, "lymphocytes number must be at most 40")
-			.required("Required"),
-		NEUTn: Yup.number()
-			.min(2, "neutrophils number must be at least 2")
-			.max(7, "neutrophils number must be at most 7")
-			.required("Required"),
-		RBC: Yup.number()
-			.min(4.5, "rbc must be at least 4.5")
-			.max(5.9, "rbc must be at most 5.9")
-			.required("Required"),
-		HGB: Yup.number()
-			.min(12, "hemoglobin must be at least 12")
-			.max(17.5, "hemoglobin must be at most 17.5")
-			.required("Required"),
-		HCT: Yup.number()
-			.min(37, "hematocrit must be at least 37")
-			.max(50, "hematocrit must be at most 50")
-			.required("Required"),
-		MCV: Yup.number()
-			.min(80, "mean corpuscular volume must be at least 80")
-			.max(100, "mean corpuscular volume must be at most 100")
-			.required("Required"),
-		MCH: Yup.number()
-			.min(27, "mean corpuscular hemoglobin must be at least 27")
-			.max(33, "mean corpuscular hemoglobin must be at most 33")
-			.required("Required"),
-		MCHC: Yup.number()
-			.min(32, "mean corpuscular hemoglobin concentration must be at least 32")
-			.max(36, "mean corpuscular hemoglobin concentration must be at most 36")
-			.required("Required"),
-		PLT: Yup.number()
-			.min(150, "platelets must be at least 150")
-			.max(450, "platelets must be at most 450")
-			.required("Required"),
-		PDW: Yup.number()
-			.min(9, "platelet distribution width must be at least 9")
-			.max(17, "platelet distribution width must be at most 17")
-			.required("Required"),
-		PCT: Yup.number()
-			.min(0.1, "procalcitonin must be at least 0.1")
-			.max(0.5, "procalcitonin must be at most 0.5")
-			.required("Required"),
-	});
+	// const validationSchema = Yup.object({
+	// 	WBC: Yup.number()
+	// 		.min(4, "wbc must be at least 4")
+	// 		.max(10, "wbc must be at most 10")
+	// 		.required("Required"),
+	// 	LYMP: Yup.number()
+	// 		.min(1, "lymphocytes must be at least 1")
+	// 		.max(4, "lymphocytes must be at most 4")
+	// 		.required("Required"),
+	// 	NEUTp: Yup.number()
+	// 		.min(40, "neutrophils percentage must be at least 40")
+	// 		.max(60, "neutrophils percentage must be at most 60")
+	// 		.required("Required"),
+	// 	LYMn: Yup.number()
+	// 		.min(20, "lymphocytes number must be at least 20")
+	// 		.max(40, "lymphocytes number must be at most 40")
+	// 		.required("Required"),
+	// 	NEUTn: Yup.number()
+	// 		.min(2, "neutrophils number must be at least 2")
+	// 		.max(7, "neutrophils number must be at most 7")
+	// 		.required("Required"),
+	// 	RBC: Yup.number()
+	// 		.min(4.5, "rbc must be at least 4.5")
+	// 		.max(5.9, "rbc must be at most 5.9")
+	// 		.required("Required"),
+	// 	HGB: Yup.number()
+	// 		.min(12, "hemoglobin must be at least 12")
+	// 		.max(17.5, "hemoglobin must be at most 17.5")
+	// 		.required("Required"),
+	// 	HCT: Yup.number()
+	// 		.min(37, "hematocrit must be at least 37")
+	// 		.max(50, "hematocrit must be at most 50")
+	// 		.required("Required"),
+	// 	MCV: Yup.number()
+	// 		.min(80, "mean corpuscular volume must be at least 80")
+	// 		.max(100, "mean corpuscular volume must be at most 100")
+	// 		.required("Required"),
+	// 	MCH: Yup.number()
+	// 		.min(27, "mean corpuscular hemoglobin must be at least 27")
+	// 		.max(33, "mean corpuscular hemoglobin must be at most 33")
+	// 		.required("Required"),
+	// 	MCHC: Yup.number()
+	// 		.min(32, "mean corpuscular hemoglobin concentration must be at least 32")
+	// 		.max(36, "mean corpuscular hemoglobin concentration must be at most 36")
+	// 		.required("Required"),
+	// 	PLT: Yup.number()
+	// 		.min(150, "platelets must be at least 150")
+	// 		.max(450, "platelets must be at most 450")
+	// 		.required("Required"),
+	// 	PDW: Yup.number()
+	// 		.min(9, "platelet distribution width must be at least 9")
+	// 		.max(17, "platelet distribution width must be at most 17")
+	// 		.required("Required"),
+	// 	PCT: Yup.number()
+	// 		.min(0.1, "procalcitonin must be at least 0.1")
+	// 		.max(0.5, "procalcitonin must be at most 0.5")
+	// 		.required("Required"),
+	// });
 
 	const fieldsInfo = [
 		{ key: "WBC", name: "White Blood Cell", abbreviation: "WBC" },
@@ -105,18 +108,24 @@ const CheckHealth = ({ setIsOpen }) => {
 
 	const formik = useFormik({
 		initialValues,
-		validationSchema,
+		// validationSchema,
 		onSubmit: async (values) => {
-			// Handle form submission
+			setIsLoading(true);
+			console.log(JSON.stringify(values));
+			const { Result } = await Check_Health(values);
+			setIsLoading(false);
+
+			setResult(Result);
+			console.log(Result);
 		},
 	});
 
 	return (
 		<>
 			<motion.main
-				initial={{ top: -100, opacity: 0 }}
-				animate={{ top: 0, opacity: 1 }}
-				exit={{ top: -100, opacity: 0 }}
+				initial={{ top: -100 }}
+				animate={{ top: 0 }}
+				exit={{ top: -100 }}
 				transition={{ duration: 0.5, type: "spring" }}
 				className="signUpUser shadow-2xl bg-white relative overflow-y-scroll flex justify-center"
 			>
@@ -130,38 +139,44 @@ const CheckHealth = ({ setIsOpen }) => {
 					<div className="">
 						<Header>Check Health</Header>
 					</div>
-					<form
-						onSubmit={formik.handleSubmit}
-						className="flex flex-col gap-6 p-5"
-					>
-						{fieldsInfo.map((field) => (
-							<div key={field.key} className="flex flex-col w-full">
-								<InputField
-									key={field.key}
-									name={field.abbreviation}
-									type="number"
-									label={field.name}
-									value={formik.values[field.abbreviation]}
-									handleChange={formik.handleChange}
-									handleBlur={formik.handleBlur}
-								/>
-								{formik.touched[field.abbreviation] &&
-									formik.errors[field.abbreviation] && (
-										<div className="text-red-600/80 ml-2">
-											{formik.errors[field.abbreviation]}
-										</div>
-									)}
+					{isLoading ? (
+						<p>Loading...</p>
+					) : !result ? (
+						<form
+							onSubmit={formik.handleSubmit}
+							className="flex flex-col gap-6 p-5"
+						>
+							{fieldsInfo.map((field) => (
+								<div key={field.key} className="flex flex-col w-full">
+									<InputField
+										key={field.key}
+										name={field.abbreviation}
+										type="number"
+										label={field.name}
+										value={formik.values[field.abbreviation]}
+										handleChange={formik.handleChange}
+										handleBlur={formik.handleBlur}
+									/>
+									{formik.touched[field.abbreviation] &&
+										formik.errors[field.abbreviation] && (
+											<div className="text-red-600/80 ml-2">
+												{formik.errors[field.abbreviation]}
+											</div>
+										)}
+								</div>
+							))}
+							<div className="flex justify-center">
+								<button
+									type="submit"
+									className="rounded-full bg-primary-600 text-white w-[240px] h-[53px] font-semibold"
+								>
+									Complete Register
+								</button>
 							</div>
-						))}
-						<div className="flex justify-center">
-							<button
-								type="submit"
-								className="rounded-full bg-primary-600 text-white w-[240px] h-[53px] font-semibold"
-							>
-								Complete Register
-							</button>
-						</div>
-					</form>
+						</form>
+					) : (
+						<p>{result}</p>
+					)}
 				</div>
 			</motion.main>
 		</>

@@ -7,6 +7,7 @@ import CheckHealth from "../Components/CheckHealth";
 
 function Home() {
 	const [isOpen, setIsOpen] = useState("");
+	
 	return (
 		<>
 			<Helmet>

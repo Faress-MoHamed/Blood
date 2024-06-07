@@ -9,9 +9,7 @@ export const Sign_Up = async (values) => {
 		);
 		return data;
 	} catch (err) {
-		console.log(err);
-
-		toast.error(err.response.data.message, {
+		toast.error(err.response.data.message || "Error", {
 			className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
 		});
 	}
@@ -24,8 +22,7 @@ export const Sign_In = async (values) => {
 		);
 		return data;
 	} catch (err) {
-		console.log(err);
-		toast.error(err.response.data.message, {
+		toast.error(err.response.data.message || "Error", {
 			className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
 		});
 	}
@@ -38,7 +35,22 @@ export const Reset_password = async (values) => {
 		);
 		return data;
 	} catch (err) {
-		toast.error(err.response.data.message, {
+		toast.error(err.response.data.message || "Error", {
+			className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
+		});
+	}
+};
+export const Check_Health = async (values) => {
+	try {
+		const { data } = await axios.post(
+			"http://3.248.215.156:8080/predict",
+			values
+		);
+		return data;
+	} catch (err) {
+		console.log(err);
+
+		toast.error(err.response.data.message || "Error", {
 			className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
 		});
 	}
