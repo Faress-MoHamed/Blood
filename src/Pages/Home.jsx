@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
+import Modal from "../Components/Modal";
+import CheckHealth from "../Components/CheckHealth";
 
 function Home() {
+	const [isOpen, setIsOpen] = useState("");
 	return (
 		<>
 			<Helmet>
@@ -43,9 +47,12 @@ function Home() {
 									about how you can take proactive steps to maintain your
 									well-being.
 								</p>
-								<Link className="lg:hover:underline text-primary-600 lg:text-black lg:hover:text-primary-700 w-fit">
+								<button
+									onClick={() => setIsOpen("CheckHealth")}
+									className="lg:hover:underline text-primary-600 lg:text-black lg:hover:text-primary-700 w-fit"
+								>
 									Go To Check Your Health
-								</Link>
+								</button>
 							</div>
 						</div>
 						<div className="flex items-center gap-10 w-full  lg:w-2/4">
@@ -89,9 +96,12 @@ function Home() {
 										cutting-edge app. Track your fitness, log your symptoms,
 										access personalized health tips, and more.
 									</p>
-									<Link className="w-56 px-2 h-10 rounded-full flex justify-center items-center font-semibold text-white bg-primary-400 hover:bg-primary-600  transition-colors duration-300">
+									<button
+										onClick={() => setIsOpen("CheckHealth")}
+										className="w-56 px-2 h-10 rounded-full flex justify-center items-center font-semibold text-white bg-primary-400 hover:bg-primary-600  transition-colors duration-300"
+									>
 										Now Go & check your health
-									</Link>
+									</button>
 								</div>
 								<div className="hidden w-2/4 lg:block">
 									<img src="/blood-lab-young.jpg" alt="" />
@@ -131,6 +141,11 @@ function Home() {
 					</div>
 				</section>
 			</main>
+			{isOpen === "CheckHealth" && (
+				<Modal handleClose={setIsOpen}>
+					<CheckHealth setIsOpen={setIsOpen} />
+				</Modal>
+			)}
 		</>
 	);
 }

@@ -3,23 +3,10 @@ import Header from "./Header";
 import InputField from "./InputField";
 import { motion } from "framer-motion";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import BloodTypeSelect from './BloodTypeSelect';
 
 function SearchNearstDonors({ setIsOpen }) {
-	const navigate = useNavigate();
-	{
-		/**{
-    "maxDistance":10000000,
-    "hospitalAddress":"alexandria mahta el raml",
-    "hospitalName":"elshatby hospital",
-    "bloodUnits":10,
-    "nationalId":1211132121,
-    "bloodGroup":"A+"
-}
- */
-	}
 	const validationSchema = Yup.object({
 		maxDistance: Yup.number().required("maxDistance is required"),
 		hospitalAddress: Yup.string().required("hospitalAddress is required"),
@@ -48,7 +35,7 @@ function SearchNearstDonors({ setIsOpen }) {
 				initial={{ top: -100, opacity: 0 }}
 				animate={{ top: 0, opacity: 1 }}
 				exit={{ top: -100, opacity: 0 }}
-				transition={{ duration: 0.5, type: "spring" }}
+				transition={{ duration: 0.3 }}
 				className="signUpUser shadow-2xl bg-white relative overflow-y-scroll flex justify-center z-[999999]"
 			>
 				<button

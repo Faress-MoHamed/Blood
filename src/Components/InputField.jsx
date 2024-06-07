@@ -9,6 +9,7 @@ function InputField({
 	handleChange,
 	handleBlur,
 	disabled,
+	label,
 }) {
 	const [visible, setVisible] = useState(false);
 	// const [values, setValue] = useState(null);
@@ -19,10 +20,15 @@ function InputField({
 		<div className="flex flex-col gap-[4px] font-Poppins w-full">
 			<div className="flex justify-between">
 				<label
-					className="text-base capitalize font-[400] text-[#666666]"
+					className="text-base capitalize font-[400] text-[#666666] "
 					htmlFor={name.split(" ").join("")}
 				>
 					{name}
+					{label && (
+						<p className="inline-block text-base capitalize font-[400] ml-1 text-[#666666]">
+							({label})
+						</p>
+					)}
 				</label>
 				{pass && (
 					<button
@@ -46,7 +52,7 @@ function InputField({
 					type={!pass ? type : visible ? "text" : "password"}
 					id={name.split(" ").join("")}
 					className="placeholder:text-base placeholder:text-[#111111]/40 border py-[15px] px-[24px] caret-[#FF0000] focus:outline-none border-[#5E5E5E]/35 rounded-[12px] h-[56px] w-full"
-					placeholder={name}
+					placeholder={label ? label : name}
 					name={name.split(" ").join("")}
 					value={value}
 					onChange={handleChange}

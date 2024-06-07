@@ -110,12 +110,12 @@ function ServicesUser() {
 						</motion.div>
 					</div>
 				</div>
-			</main>
 			{IsOpen === "searchDonor" && (
 				<Modal handleClose={setIsOpen}>
 					<SearchNearstDonors setIsOpen={setIsOpen} />
 				</Modal>
 			)}
+			</main>
 		</>
 	);
 }

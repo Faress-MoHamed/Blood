@@ -1,5 +1,6 @@
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 const navLinks = [
 	{
@@ -53,6 +54,12 @@ function NavBar() {
 	function handleOpen() {
 		setOpen((e) => !e);
 	}
+
+		useEffect(() => {
+			if (!localStorage.getItem("token") && window.location.pathname !== "/") {
+				toast.error("You must be logged in to access this page");
+		}
+	}, [window.location.pathname]);
 
 	return (
 		<>
