@@ -32,7 +32,7 @@ function ResetPassword({ setIsOpen }) {
 					JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
 				);
 				navigate("/");
-				window.location.reload();
+				// window.location.reload();
 				toast.success("Sign In Successfully ✔👏", {
 					className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
 				});

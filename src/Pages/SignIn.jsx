@@ -46,7 +46,7 @@ function SignIn({ setIsOpen }) {
 					);
 				}
 				navigate("/");
-				window.location.reload();
+				// window.location.reload();
 				toast.success("Sign In Successfully ✔👏", {
 					className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
 				});
