@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Header from "./Header";
 import { useFormik } from "formik";
 import { Verify_Email } from "../End points/User";
-import toast from "react-hot-toast";
 
 function ValidationCodeModal({ setIsOpen }) {
 	const otpBoxReference = useRef([]);
@@ -17,7 +16,16 @@ function ValidationCodeModal({ setIsOpen }) {
 			const code = values.code.join("");
 			const res = await Verify_Email({ verificationCode: code });
 			if (res === "congrats now your Account  is verfied ") {
-				
+				const existingUser = JSON.parse(localStorage.getItem("user")) || {};
+
+				// Update the user data with the new role
+				const updatedUser = {
+					...existingUser,
+					validate: true,
+				};
+
+				// Save the updated user data back to localStorage
+				localStorage.setItem("user", JSON.stringify(updatedUser));
 				setIsOpen(null);
 			}
 		},
