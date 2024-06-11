@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Sign_In } from "../End points/User";
 import toast from "react-hot-toast";
-import { AddToLocalStorage } from "../hooks/AddToSessionStorage";
+import { AddToSessionStorage } from "../hooks/AddToSessionStorage";
 import { useState } from "react";
 import Cookies from "js-cookie";
 
@@ -33,8 +33,8 @@ function SignIn({ setIsOpen }) {
 			const res = await Sign_In(values);
 			setLoading(false);
 			if (res.status === "success") {
-				AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
-				AddToLocalStorage(
+				AddToSessionStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
+				AddToSessionStorage(
 					"user",
 					JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
 				);
