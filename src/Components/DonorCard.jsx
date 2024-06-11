@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 
 function DonorCard({ email, location, id }) {
 	return (

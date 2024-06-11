@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { IoIosCloseCircle } from "react-icons/io";
 import { Sign_Up } from "../End points/User";
 import toast from "react-hot-toast";
-import { AddToLocalStorage } from "../hooks/AddToLocalStorage";
+import { AddToSessionStorage } from "../hooks/AddToSessionStorage";
 import { useNavigate } from "react-router-dom";
 
 function SignUpUser({ setIsOpen }) {
@@ -45,8 +45,8 @@ function SignUpUser({ setIsOpen }) {
 			try {
 				const res = await Sign_Up(values);
 				if (res.status === "success") {
-					AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
-					AddToLocalStorage(
+					AddToSessionStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
+					AddToSessionStorage(
 						"user",
 						JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
 					);
