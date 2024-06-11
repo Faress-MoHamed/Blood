@@ -1,5 +1,5 @@
 export const AddToLocalStorage = (key, data, expiredDate) => {
-	window.sessionStorage.setItem(key, data, {
+	window.localStorage.setItem(key, data, {
 		expiredDate: expiredDate || 0,
 	});
 };
