@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import InputField from "./InputField";
 import { IoIosCloseCircle } from "react-icons/io";
-import { AddToLocalStorage } from "../hooks/AddToSessionStorage";
+import { AddToSessionStorage } from "../hooks/AddToSessionStorage";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -26,8 +26,8 @@ function ResetPassword({ setIsOpen }) {
 			setLoading(false);
 			console.log(res);
 			if (res.status === "success") {
-				AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
-				AddToLocalStorage(
+				AddToSessionStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
+				AddToSessionStorage(
 					"user",
 					JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
 				);
