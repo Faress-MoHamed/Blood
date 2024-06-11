@@ -149,29 +149,6 @@ function SignUpUser({ setIsOpen }) {
 								</div>
 							) : null}
 						</div>
-						{/* <div className="flex flex-col gap-[4px] font-Poppins">
-							<label
-								htmlFor="bloodType"
-								className="text-base capitalize font-[400] text-[#666666]"
-							>
-								Select Blood Type
-							</label>
-							<div className="relative">
-								<div className="flex flex-col w-full">
-									<BloodTypeSelect
-										value={formik.values.bloodType}
-										handleChange={formik.handleChange}
-										handleBlur={formik.handleBlur}
-									/>
-								</div>
-
-								{formik.touched.bloodType && formik.errors.bloodType ? (
-									<div className="text-red-600/80 ml-2">
-										{formik.errors.bloodType}
-									</div>
-								) : null}
-							</div>
-						</div> */}
 						<div className="flex flex-col gap-[4px] font-Poppins">
 							<InputField
 								name={"country"}
