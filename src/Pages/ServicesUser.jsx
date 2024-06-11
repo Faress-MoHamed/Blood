@@ -5,6 +5,8 @@ import SearchNearstDonors from "../Components/SearchNearstDonors";
 import { useState } from "react";
 import Header from "../Components/Header";
 import Modal from "../Components/Modal";
+import CheckHealth from "../Components/CheckHealth";
+import { Updata_Role } from "../End points/User";
 
 function ServicesUser() {
 	const [IsOpen, setIsOpen] = useState(null);
@@ -14,12 +16,12 @@ function ServicesUser() {
 				<title>Services.</title>
 				<meta name="description" content="User services blood donor find" />
 			</Helmet>
-			<main className="overflow-x-hidden p-16">
+			<main className="overflow-x-hidden lg:mt-0 mt-[66px] lg:p-16 p-8">
 				<div className="container mx-auto flex flex-col items-center lg:gap-0 gap-8 py-5 justify-center h-full px-4 md:px-0">
 					<div className="self-start w-full">
 						<Header>Donation blood</Header>
 					</div>
-					<div className="flex lg:flex-row flex-col gap-8 px-8">
+					<div className="flex lg:flex-row flex-col gap-8 lg:px-8">
 						<motion.div
 							initial={{ opacity: 0, x: 100 }}
 							transition={{
@@ -71,16 +73,21 @@ function ServicesUser() {
 									donation centers, track your donation history, and get
 									notified of upcoming drives.
 								</p>
-								<Link className="w-56 px-2 h-10 rounded-full flex justify-center items-center font-semibold text-white bg-primary-400 hover:bg-primary-600  transition-colors duration-300">
+								<button
+									onClick={async () => {
+										await Updata_Role();
+									}}
+									className="w-56 px-2 h-10 rounded-full flex justify-center items-center font-semibold text-white bg-primary-400 hover:bg-primary-600  transition-colors duration-300"
+								>
 									Donate Blood
-								</Link>
+								</button>
 							</div>
 							<div className="hidden w-[150px] lg:block">
 								<img src="./icon-patient-purple.png" alt="" />
 							</div>
 						</motion.div>
 					</div>
-					<div className="px-8">
+					<div className="flex lg:flex-row flex-col gap-8 lg:px-8">
 						<motion.div
 							initial={{ opacity: 0, x: 100 }}
 							transition={{
@@ -88,33 +95,67 @@ function ServicesUser() {
 								type: "spring",
 							}}
 							animate={{ opacity: 1, x: 0 }}
-							className="flex items-center justify-between"
+							className="flex items-center justify-between lg:w-2/4 w-full "
 						>
 							<div className="hidden w-[150px] lg:block">
 								<img src="./icon-person-heart-purple.png" alt="" />
 							</div>
-							<div className="flex w-full flex-col gap-8 p-0 lg:p-12 lg:pb-0">
+							<div className="flex w-full flex-col justify-between  h-full gap-3 p-0 lg:p-12 lg:pb-0">
 								<header className="capitalize text-xl font-bold text-primary-600">
 									Join Upcoming Blood Donation Events.
 								</header>
 								<p className="text-lg text-black/85 leading-8">
 									Participate in our blood donation events and make a difference
 									in your community. Find nearby events, register to donate, and
-									stay informed about the impact of your contributions. Every
-									drop counts—be a hero today.
+									stay informed about the impact of your contributions
 								</p>
 								<Link className="w-56 px-2 h-10 rounded-full flex justify-center items-center font-semibold text-white bg-primary-400 hover:bg-primary-600  transition-colors duration-300">
 									Find Events
 								</Link>
 							</div>
 						</motion.div>
+						<motion.div
+							initial={{ opacity: 0, x: 100 }}
+							transition={{
+								duration: 0.3,
+								type: "spring",
+							}}
+							animate={{ opacity: 1, x: 0 }}
+							className="flex items-center justify-between lg:w-2/4 w-full"
+						>
+							<div className="flex w-full flex-col justify-between h-full gap-3 p-0 lg:p-12 lg:pb-0">
+								<header className="capitalize text-xl font-bold text-primary-600">
+									know everything about your health Now.
+								</header>
+								<p className="text-lg text-black/85 leading-8">
+									Monitoring your health is easier than ever with our
+									cutting-edge app. Track your fitness, log your symptoms,
+									access personalized health tips, and more.
+								</p>
+								<button
+									onClick={() => {
+										setIsOpen("CheckHealth");
+									}}
+									className="w-56 px-2 h-10 rounded-full flex justify-center items-center font-semibold text-white bg-primary-400 hover:bg-primary-600  transition-colors duration-300"
+								>
+									Now Go & check your health
+								</button>
+							</div>
+							<div className="hidden w-[150px] lg:block ">
+								<img src="/icon-hand-heart.png" alt="" />
+							</div>
+						</motion.div>
 					</div>
 				</div>
-			{IsOpen === "searchDonor" && (
-				<Modal handleClose={setIsOpen}>
-					<SearchNearstDonors setIsOpen={setIsOpen} />
-				</Modal>
-			)}
+				{IsOpen === "searchDonor" ? (
+					<Modal handleClose={setIsOpen}>
+						<SearchNearstDonors setIsOpen={setIsOpen} />
+					</Modal>
+				) : IsOpen === "CheckHealth" ? (
+					<Modal handleClose={setIsOpen}>
+						<CheckHealth setIsOpen={setIsOpen} />
+					</Modal>
+				) : null}
 			</main>
 		</>
 	);

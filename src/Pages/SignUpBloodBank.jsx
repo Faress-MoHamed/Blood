@@ -8,10 +8,10 @@ function SignUpBloodBank({ setIsOpen }) {
 
 
 	const validationSchema = Yup.object({
-		UserName: Yup.string()
-			.min(2, "UserName must be at least 2 characters")
-			.max(50, "UserName must be less than 50 characters")
-			.required("UserName is required"),
+		BloodBank: Yup.string()
+			.min(2, "BloodBank must be at least 2 characters")
+			.max(50, "BloodBank must be less than 50 characters")
+			.required("BloodBank is required"),
 		password: Yup.string()
 			.min(8, "Password must be at least 8 characters")
 			.required("Password is required"),
@@ -31,7 +31,7 @@ function SignUpBloodBank({ setIsOpen }) {
 
 	const formik = useFormik({
 		initialValues: {
-			UserName: "",
+			BloodBank: "",
 			password: "",
 			ConfirmPassword: "",
 			MobileNumber: "",
@@ -65,15 +65,15 @@ function SignUpBloodBank({ setIsOpen }) {
 				>
 					<div className="flex flex-col w-full">
 						<InputField
-							name={"User Name"}
+							name={"Blood Bank"}
 							type={"text"}
-							value={formik.values.UserName}
+							value={formik.values.BloodBank}
 							handleChange={formik.handleChange}
 							handleBlur={formik.handleBlur}
 						/>
 						<div className="ml-2">
-							{formik.touched.UserName && formik.errors.UserName ? (
-								<div className="text-red-600/80">{formik.errors.UserName}</div>
+							{formik.touched.BloodBank && formik.errors.BloodBank ? (
+								<div className="text-red-600/80">{formik.errors.BloodBank}</div>
 							) : null}
 						</div>
 					</div>

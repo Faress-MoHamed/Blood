@@ -4,10 +4,11 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import Modal from "../Components/Modal";
 import CheckHealth from "../Components/CheckHealth";
+import { jwtDecode } from "jwt-decode";
 
 function Home() {
 	const [isOpen, setIsOpen] = useState("");
-	
+
 	return (
 		<>
 			<Helmet>
@@ -17,11 +18,11 @@ function Home() {
 			<main className="pt-[60px]">
 				<section className="hero relative flex justify-center items-center bg-[url(/logo/donation-8937.jpg)] bg-no-repeat after:absolute after:left-0 after:top-0 after:w-full after:h-full after:bg-black/35 h-[92.6vh] bg-cover">
 					<div className="z-20 container mx-auto flex flex-col items-center gap-11 justify-center h-full px-4 md:px-0">
-						<h2 className="lg:leading-[60px] leading-[40px] text-white md:text-[3rem] text-2xl drop-shadow-lg font-bold  text-center">
+						<h2 className="lg:leading-[60px] leading-[40px] text-white lg:text-[3rem] text-4xl drop-shadow-lg font-bold  text-center">
 							Connecting Communities,
 							<br /> Improving Healthcare, Changing Lives
 						</h2>
-						<p className="md:w-[910px]  w-full text-center font-semibold text-xl text-white">
+						<p className="md:w-[90%]  w-full text-center font-semibold text-xl text-white">
 							Egyptian's Blood Centers is the national association of
 							independent, community blood centers dedicated to providing a safe
 							and available blood supply for every patient in need.
@@ -49,7 +50,11 @@ function Home() {
 									well-being.
 								</p>
 								<button
-									onClick={() => setIsOpen("CheckHealth")}
+									onClick={() => {
+										if (jwtDecode(localStorage.getItem("token"))) {
+											setIsOpen("CheckHealth");
+										}
+									}}
 									className="lg:hover:underline text-primary-600 lg:text-black lg:hover:text-primary-700 w-fit"
 								>
 									Go To Check Your Health
@@ -98,7 +103,11 @@ function Home() {
 										access personalized health tips, and more.
 									</p>
 									<button
-										onClick={() => setIsOpen("CheckHealth")}
+										onClick={() => {
+											if (jwtDecode(localStorage.getItem("token"))) {
+												setIsOpen("CheckHealth");
+											}
+										}}
 										className="w-56 px-2 h-10 rounded-full flex justify-center items-center font-semibold text-white bg-primary-400 hover:bg-primary-600  transition-colors duration-300"
 									>
 										Now Go & check your health

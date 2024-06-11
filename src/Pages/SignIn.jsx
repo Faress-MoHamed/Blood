@@ -7,8 +7,10 @@ import * as Yup from "yup";
 import { Sign_In } from "../End points/User";
 import toast from "react-hot-toast";
 import { AddToLocalStorage } from "../hooks/AddToLocalStorage";
+import { useState } from "react";
 
 function SignIn({ setIsOpen }) {
+	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
 	const validationSchema = Yup.object({
@@ -26,9 +28,9 @@ function SignIn({ setIsOpen }) {
 		},
 		validationSchema,
 		onSubmit: async (values) => {
-			console.log(values);
-
+			setLoading(true);
 			const res = await Sign_In(values);
+			setLoading(false);
 			console.log(res);
 			if (res.status === "success") {
 				AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
@@ -101,7 +103,12 @@ function SignIn({ setIsOpen }) {
 					<div className="flex justify-center">
 						<button
 							type="submit"
-							className=" rounded-full bg-primary-600 text-white w-[240px] h-[53px] font-semibold"
+							disabled={loading}
+							className={`${
+								loading
+									? "bg-slate-400 text-black"
+									: "bg-primary-600 text-white"
+							} rounded-full  w-[240px] h-[53px] font-semibold`}
 						>
 							Sign In
 						</button>

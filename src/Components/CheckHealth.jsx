@@ -4,8 +4,9 @@ import { IoIosCloseCircle } from "react-icons/io";
 import Header from "./Header";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+// import * as Yup from "yup";
 import { Check_Health } from "../End points/User";
+import { DNA } from "react-loader-spinner";
 const CheckHealth = ({ setIsOpen }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [result, setResult] = useState(null);
@@ -127,7 +128,7 @@ const CheckHealth = ({ setIsOpen }) => {
 				animate={{ top: 0 }}
 				exit={{ top: -100 }}
 				transition={{ duration: 0.5, type: "spring" }}
-				className="signUpUser shadow-2xl bg-white relative overflow-y-scroll flex justify-center"
+				className="signUpUser shadow-2xl bg-white relative overflow-y-auto flex justify-center"
 			>
 				<button
 					onClick={() => setIsOpen(null)}
@@ -140,7 +141,16 @@ const CheckHealth = ({ setIsOpen }) => {
 						<Header>Check Health</Header>
 					</div>
 					{isLoading ? (
-						<p>Loading...</p>
+						<div className="flex items-center justify-center h-4/5">
+							<DNA
+								visible={true}
+								height="80"
+								width="80"
+								ariaLabel="dna-loading"
+								wrapperStyle={{}}
+								wrapperClass="dna-wrapper"
+							/>
+						</div>
 					) : !result ? (
 						<form
 							onSubmit={formik.handleSubmit}
@@ -170,12 +180,14 @@ const CheckHealth = ({ setIsOpen }) => {
 									type="submit"
 									className="rounded-full bg-primary-600 text-white w-[240px] h-[53px] font-semibold"
 								>
-									Complete Register
+									Check Health
 								</button>
 							</div>
 						</form>
 					) : (
-						<p>{result}</p>
+						<div className="flex items-center justify-center h-4/5">
+							<p className="text-4xl text-primary-500 font-bold ">{result}</p>
+						</div>
 					)}
 				</div>
 			</motion.main>
