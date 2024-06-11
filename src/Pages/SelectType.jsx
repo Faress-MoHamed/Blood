@@ -5,6 +5,8 @@ import { AnimatePresence } from "framer-motion";
 import SignUpUser from "./SignUpUser";
 import SignUpBloodBank from "./SignUpBloodBank";
 import Modal from "../Components/Modal";
+import VerifyEmail from "../Components/VerifyEmail";
+import ResetPassword from "../Components/ResetPassword";
 
 function SelectType() {
 	const [openModal, setOpenModal] = useState(false);
@@ -58,6 +60,10 @@ function SelectType() {
 							<SignIn setIsOpen={setOpenModal} />
 						) : openModal === "bloodBank" ? (
 							<SignUpBloodBank setIsOpen={setOpenModal} />
+						) : openModal === "verify" ? (
+							<VerifyEmail setIsOpen={setOpenModal} />
+						) : openModal === "otp" ? (
+							<ResetPassword setIsOpen={setOpenModal} />
 						) : null}
 					</AnimatePresence>
 				</Modal>

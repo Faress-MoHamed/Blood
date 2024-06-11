@@ -27,7 +27,7 @@ export default function Modal({ handleClose, children }) {
 				className="left-0 top-0 h-full z-20 fixed inset-0 overflow-hidden bg-black bg-opacity-50"
 			></div>
 			<div className="flex justify-center items-center fixed inset-0 h-full z-40 w-fit left-2/4 top-2/4 translate-x-[-50%] translate-y-[-50%]">
-				<div className="relative z-50 w-[90%]">
+				<div className="relative z-50 w-[90%] flex justify-center items-center">
 					<button onClick={closeHandler} className="absolute top-0 right-0 p-2">
 						Close
 					</button>

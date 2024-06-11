@@ -6,8 +6,9 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Sign_In } from "../End points/User";
 import toast from "react-hot-toast";
-import { AddToLocalStorage } from "../hooks/AddToLocalStorage";
+import { AddToLocalStorage } from "../hooks/AddToSessionStorage";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 function SignIn({ setIsOpen }) {
 	const [loading, setLoading] = useState(false);
@@ -31,13 +32,19 @@ function SignIn({ setIsOpen }) {
 			setLoading(true);
 			const res = await Sign_In(values);
 			setLoading(false);
-			console.log(res);
 			if (res.status === "success") {
 				AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
 				AddToLocalStorage(
 					"user",
 					JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
 				);
+				if (typeof Cookies !== "undefined" && res && res.token) {
+					Cookies.set("jwt", res.token);
+				} else {
+					console.error(
+						"Cookies library is not loaded or res.token is undefined"
+					);
+				}
 				navigate("/");
 				window.location.reload();
 				toast.success("Sign In Successfully ✔👏", {
@@ -96,9 +103,14 @@ function SignIn({ setIsOpen }) {
 								{formik.errors.password}
 							</div>
 						) : null}
-					</div>{" "}
+					</div>
 					<div className="text-right">
-						<Link className="text-primary-600">forget your password?</Link>
+						<button
+							onClick={() => setIsOpen("verify")}
+							className="text-primary-600"
+						>
+							forget your password?
+						</button>
 					</div>
 					<div className="flex justify-center">
 						<button

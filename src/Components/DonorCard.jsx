@@ -17,14 +17,6 @@ function DonorCard({ email, location, id }) {
 				</div>
 			</div>
 			<div>
-				<Link
-					className="google-map font-bold text-primary-500 p-2 rounded-full hover:bg-black/5 duration-300 transition-colors"
-					target="_blank"
-					to={`https://www.google.com/maps?q=${location.coordinates[1]},${location.coordinates[0]}
-        `}
-				>
-					Location
-				</Link>
 				<button className=" font-bold text-primary-500 p-2 rounded-full hover:bg-black/5 duration-300 transition-colors">
 					send Request
 				</button>

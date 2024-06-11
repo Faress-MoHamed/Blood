@@ -8,6 +8,7 @@ import Profile from "./Pages/Profile";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
+import NotFound from "./Components/NotFound";
 // import ValidationCode from "./Pages/ValidationCode";
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
 		{
 			path: "/",
 			element: <Layout />,
+			errorElement: <NotFound />,
+
 			children: [
 				{
 					index: true,

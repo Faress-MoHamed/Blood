@@ -2,26 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import InputField from "../Components/InputField";
 
 function ValidationCode() {
-	// const [otp, setOtp] = useState(new Array(6).fill(""));
-	// const [error, setError] = useState("");
-
-	// const handleChange = (element, index) => {
-	// 	if (isNaN(element.value)) return false;
-
-	// 	setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
-
-	// 	// Focus next input
-	// 	if (element.nextSibling) {
-	// 		element.nextSibling.focus();
-	// 	}
-	// };
-
-	// const handleSubmit = (e) => {
-	// 	e.preventDefault();
-	// 	const enteredOtp = otp.join("");
-
-	// };
-	const [otp, setOtp] = useState(new Array(6).fill(""));
+const [otp, setOtp] = useState(new Array(6).fill(""));
 	const otpBoxReference = useRef([]);
 
 	function handleChange(value, index) {
