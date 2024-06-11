@@ -4,11 +4,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import InputField from "./InputField";
 import { IoIosCloseCircle } from "react-icons/io";
-import { AddToSessionStorage } from "../hooks/AddToSessionStorage";
+import { AddToLocalStorage } from "../hooks/AddToLocalStorage";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { Reset_password } from "../End points/User";
+import {  Reset_password } from "../End points/User";
 function ResetPassword({ setIsOpen }) {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
@@ -26,13 +26,13 @@ function ResetPassword({ setIsOpen }) {
 			setLoading(false);
 			console.log(res);
 			if (res.status === "success") {
-				AddToSessionStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
-				AddToSessionStorage(
+				AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
+				AddToLocalStorage(
 					"user",
 					JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
 				);
 				navigate("/");
-				// window.location.reload();
+				window.location.reload();
 				toast.success("Sign In Successfully ✔👏", {
 					className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
 				});
