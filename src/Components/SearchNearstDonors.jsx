@@ -65,7 +65,6 @@ function SearchNearstDonors({ setIsOpen }) {
 		},
 	});
 	return !(
-		req !== null ||
 		req !== "" ||
 		req === "[]" ||
 		JSON.parse(req).length >= 0
