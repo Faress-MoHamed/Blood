@@ -59,7 +59,7 @@ function SignIn({ setIsOpen }) {
 			animate={{ top: 0, opacity: 1 }}
 			exit={{ top: -100, opacity: 0 }}
 			transition={{ duration: 0.5, type: "spring" }}
-			className="shadow-2xl bg-white signIn relative flex justify-center items-center w-[750px] rounded-lg "
+			className="shadow-2xl bg-white signIn relative flex justify-center items-center rounded-lg lg:w-full w-[80%]"
 		>
 			<button
 				className="absolute right-10 top-10"
@@ -118,11 +118,11 @@ function SignIn({ setIsOpen }) {
 							disabled={loading}
 							className={`${
 								loading
-									? "bg-slate-400 text-black"
+									? "bg-black/25 text-white"
 									: "bg-primary-600 text-white"
 							} rounded-full  w-[240px] h-[53px] font-semibold`}
 						>
-							Sign In
+							{loading ? "Loading..." : "Sign In"}
 						</button>
 					</div>
 					<div className="flex justify-center">

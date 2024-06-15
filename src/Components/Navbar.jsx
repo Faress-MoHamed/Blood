@@ -141,7 +141,6 @@ function NavBar() {
 									className="text-4xl text-black"
 									onClick={() => handleClose()}
 								>
-									
 									<i className="fa-solid fa-xmark"></i>
 								</button>
 								{navLinksMobile.map((item) => {

@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import InputField from "../Components/InputField";
+import { useRef, useState } from "react";
 
 function ValidationCode() {
-const [otp, setOtp] = useState(new Array(6).fill(""));
+	const [otp, setOtp] = useState(new Array(6).fill(""));
 	const otpBoxReference = useRef([]);
 
 	function handleChange(value, index) {

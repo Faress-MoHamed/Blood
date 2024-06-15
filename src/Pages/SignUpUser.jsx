@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Components/Header";
 import InputField from "../Components/InputField";
 import { useFormik } from "formik";
@@ -11,6 +11,8 @@ import { AddToLocalStorage } from "../hooks/AddToLocalStorage";
 import { useNavigate } from "react-router-dom";
 
 function SignUpUser({ setIsOpen }) {
+	const [loading, setLoading] = useState(false);
+
 	const navigate = useNavigate();
 
 	const validationSchema = Yup.object({
@@ -43,6 +45,7 @@ function SignUpUser({ setIsOpen }) {
 		validationSchema,
 		onSubmit: async (values) => {
 			try {
+				setLoading(true);
 				const res = await Sign_Up(values);
 				if (res.status === "success") {
 					AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
@@ -61,6 +64,8 @@ function SignUpUser({ setIsOpen }) {
 			} catch (error) {
 				console.error(error);
 				toast.error("An error occurred during sign up");
+			} finally {
+				setLoading(false)
 			}
 		},
 	});
@@ -71,7 +76,7 @@ function SignUpUser({ setIsOpen }) {
 			animate={{ top: 0, opacity: 1 }}
 			exit={{ top: -100, opacity: 0 }}
 			transition={{ duration: 0.5, type: "spring" }}
-			className="signUpUser shadow-2xl bg-white relative overflow-y-scroll flex justify-center"
+			className="signUpUser shadow-2xl bg-white relative overflow-y-scroll flex justify-center lg:w-full w-[80%]"
 		>
 			<button className="absolute right-6 top-6" onClick={() => setIsOpen("")}>
 				<IoIosCloseCircle className="w-7 h-7 hover:text-black/70 duration-300" />
@@ -190,9 +195,12 @@ function SignUpUser({ setIsOpen }) {
 					<div className="flex justify-center">
 						<button
 							type="submit"
-							className="rounded-full bg-primary-600 text-white w-[240px] h-[53px] font-semibold"
+							disabled={loading}
+							className={`${
+								loading ? "bg-black/25 text-white" : "bg-primary-600 text-white"
+							} rounded-full  w-[240px] h-[53px] font-semibold`}
 						>
-							Complete Register
+							{loading ? "Loading..." : "Complete Register"}
 						</button>
 					</div>
 				</form>

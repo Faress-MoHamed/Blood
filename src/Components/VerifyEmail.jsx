@@ -3,6 +3,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { Forget_Password } from "../End points/User";
 
 function VerifyEmail({ setIsOpen }) {
 	const validationSchema = Yup.object({
@@ -16,6 +17,7 @@ function VerifyEmail({ setIsOpen }) {
 		},
 		validationSchema,
 		onSubmit: async () => {
+			await Forget_Password();
 			setIsOpen("otp");
 		},
 	});
@@ -25,7 +27,7 @@ function VerifyEmail({ setIsOpen }) {
 			animate={{ top: 0, opacity: 1 }}
 			exit={{ top: -100, opacity: 0 }}
 			transition={{ duration: 0.5, type: "spring" }}
-			className="shadow-2xl bg-white signIn relative flex flex-col justify-center items-center w-[750px] rounded-lg "
+			className="shadow-2xl bg-white signIn relative flex flex-col justify-center items-center lg:w-full w-[80%] rounded-lg "
 		>
 			<div className="flex justify-between">
 				<button
@@ -61,9 +63,7 @@ function VerifyEmail({ setIsOpen }) {
 					<div className="flex justify-center">
 						<button
 							type="submit"
-							className={`${
-									"bg-primary-600 text-white"
-							} rounded-full  w-[240px] h-[53px] font-semibold`}
+							className={`${"bg-primary-600 text-white"} rounded-full  w-[240px] h-[53px] font-semibold`}
 						>
 							Send verifivation Code
 						</button>

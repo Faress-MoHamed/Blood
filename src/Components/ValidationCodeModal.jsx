@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import { motion } from "framer-motion";
 import Header from "./Header";
@@ -6,6 +6,8 @@ import { useFormik } from "formik";
 import { Verify_Email } from "../End points/User";
 
 function ValidationCodeModal({ setIsOpen }) {
+	const [loading, setLoading] = useState(false);
+
 	const otpBoxReference = useRef([]);
 
 	const formik = useFormik({
@@ -13,6 +15,7 @@ function ValidationCodeModal({ setIsOpen }) {
 			code: new Array(6).fill(""),
 		},
 		onSubmit: async (values) => {
+			setLoading(true);
 			const code = values.code.join("");
 			const res = await Verify_Email({ verificationCode: code });
 			if (res === "congrats now your Account  is verfied ") {
@@ -28,6 +31,7 @@ function ValidationCodeModal({ setIsOpen }) {
 				localStorage.setItem("user", JSON.stringify(updatedUser));
 				setIsOpen(null);
 			}
+			setLoading(false);
 		},
 	});
 
@@ -92,9 +96,12 @@ function ValidationCodeModal({ setIsOpen }) {
 					<div className="text-center">
 						<button
 							type="submit"
-							className="bg-primary-500 hover:bg-primary-700 transition-colors duration-200 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+							disabled={loading}
+							className={`${
+								loading ? "bg-black/25 text-white" : "bg-primary-600 text-white"
+							} rounded-full  w-[240px] h-[53px] font-semibold`}
 						>
-							Verify Code
+							{loading ? "Loading..." : "Verify Code"}
 						</button>
 					</div>
 				</form>

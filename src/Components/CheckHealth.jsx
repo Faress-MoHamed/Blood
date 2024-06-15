@@ -128,7 +128,7 @@ const CheckHealth = ({ setIsOpen }) => {
 				animate={{ top: 0 }}
 				exit={{ top: -100 }}
 				transition={{ duration: 0.5, type: "spring" }}
-				className="signUpUser shadow-2xl bg-white relative overflow-y-auto flex justify-center"
+				className="signUpUser shadow-2xl bg-white relative overflow-y-auto flex justify-center lg:w-full w-[80%]"
 			>
 				<button
 					onClick={() => setIsOpen(null)}

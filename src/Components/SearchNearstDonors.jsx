@@ -5,23 +5,51 @@ import { motion } from "framer-motion";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import BloodTypeSelect from "./BloodTypeSelect";
-import { Search_Nearest_Donors, Updata_Role_Patient } from "../End points/User";
+import {
+	Search_Nearest_Donors,
+	Send_Request_to_donor,
+	Updata_Role_Patient,
+} from "../End points/User";
 import { useState } from "react";
 import { DNA } from "react-loader-spinner";
 import DonorCard from "./DonorCard";
+import AcceptedRequests from "./AcceptedRequests";
 
 function SearchNearstDonors({ setIsOpen }) {
 	const [result, setResult] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const [select, setSelected] = useState([]);
+	let req = sessionStorage.getItem("req");
+	console.log(req);
+	const handleRequestSend = async () => {
+		await Send_Request_to_donor(select, select.at(0));
+		setIsOpen("AcceptedRequests");
+	};
+
+	const handleSubmit = async (values) => {
+		setLoading(true);
+		if (JSON.parse(localStorage.getItem("user")).role !== "patient") {
+			await Updata_Role_Patient();
+		}
+		const data = await Search_Nearest_Donors(values);
+		if (data.nearestDonors) {
+			setResult(data.nearestDonors);
+			setLoading(false);
+		} else if (data.response.data.message) {
+			setError(data.response.data.message);
+			setLoading(false);
+		}
+	};
+
 	const validationSchema = Yup.object({
 		hospitalAddress: Yup.string().required("hospitalAddress is required"),
 		hospitalName: Yup.string().required("hospitalName is required"),
 		bloodGroup: Yup.string()
 			.matches(/^(A|B|AB|O)[+-]$/, "Invalid bloodGroup")
 			.required("bloodGroup is required"),
-		bloodUnits: Yup.number().required("bloodUnits is required"),
-		nationalId: Yup.number().required("nationalId is required"),
+		bloodUnits: Yup.number().min(1).max(10).required("bloodUnits is required"),
+		// nationalId: Yup.string().length(12).required("nationalId is required"),
 	});
 	const formik = useFormik({
 		initialValues: {
@@ -33,20 +61,15 @@ function SearchNearstDonors({ setIsOpen }) {
 		},
 		validationSchema,
 		onSubmit: async (values) => {
-			setLoading(true);
-			await Updata_Role_Patient();
-			const data = await Search_Nearest_Donors(values);
-			if (data.nearestDonors) {
-				setResult(data.nearestDonors);
-				setLoading(false);
-			}
-			if (data.response.data.message) {
-				setError(data.response.data.message);
-				setLoading(false);
-			}
+			handleSubmit(values);
 		},
 	});
-	return (
+	return !(
+		req !== null ||
+		req !== "" ||
+		req === "[]" ||
+		JSON.parse(req).length >= 0
+	) ? (
 		<>
 			(
 			<motion.main
@@ -54,7 +77,7 @@ function SearchNearstDonors({ setIsOpen }) {
 				animate={{ top: 0, opacity: 1 }}
 				exit={{ top: -100, opacity: 0 }}
 				transition={{ duration: 0.3 }}
-				className="signUpUser shadow-2xl bg-white relative overflow-y-auto flex justify-center z-[999999]"
+				className="signUpUser shadow-2xl bg-white relative overflow-y-auto flex justify-center z-[999999] lg:w-full w-[80%]"
 			>
 				<button
 					className="absolute right-6 top-6"
@@ -78,17 +101,56 @@ function SearchNearstDonors({ setIsOpen }) {
 							/>
 						</div>
 					) : error ? (
-						<p className="text-red-500">{error}</p>
+						<div className="flex items-center justify-center h-4/5">
+							<p className="text-red-500">{error}</p>
+						</div>
 					) : result ? (
-						<div className="flex flex-col gap-5 p-4">
-							{result.map((el) => (
-								<DonorCard
-									email={el.email}
-									location={el.location}
-									key={el.email}
-									id={el._id}
-								/>
-							))}
+						<div className="flex-col flex justify-between h-[80%]">
+							<div className="flex justify-between">
+								<button
+									onClick={() => handleSubmit(formik.values)}
+									className="font-semibold  text-black  hover:underline p-2 rounded-full  duration-300 transition-colors"
+								>
+									Refresh
+								</button>
+								<button
+									onClick={() => {
+										const Btns = document.querySelectorAll(".donor-btn");
+										Btns.forEach((el) => el.click());
+									}}
+									className="font-bold text-white bg-primary-400 hover:bg-primary-600 p-2 rounded-full  duration-300 transition-colors"
+								>
+									Select All
+								</button>
+							</div>
+							<div className="flex flex-col gap-5 p-4 overflow-y-auto h-[60%]">
+								{result.map((el) => (
+									<DonorCard
+										email={el.email}
+										location={el.location}
+										key={el.email}
+										id={el._id}
+										setSelected={setSelected}
+										select={select}
+									/>
+								))}
+							</div>
+							<div className="flex justify-center">
+								<button
+									onClick={(e) => {
+										e.preventDefault();
+										handleRequestSend();
+									}}
+									disabled={loading}
+									className={`${
+										loading
+											? "bg-slate-400 text-black"
+											: "bg-primary-600 text-white"
+									} rounded-full  w-[240px] h-[53px] font-semibold`}
+								>
+									Send Requests to Donors
+								</button>
+							</div>
 						</div>
 					) : (
 						<form
@@ -189,6 +251,8 @@ function SearchNearstDonors({ setIsOpen }) {
 			</motion.main>
 			)
 		</>
+	) : (
+		<AcceptedRequests setIsOpen={setIsOpen} />
 	);
 }
 

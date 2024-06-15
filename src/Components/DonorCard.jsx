@@ -1,5 +1,4 @@
-
-function DonorCard({ email, location, id }) {
+function DonorCard({ email, location, id, setSelected, select }) {
 	return (
 		<div className="rounded-lg flex items-center justify-between">
 			<div className="flex gap-5">
@@ -16,9 +15,25 @@ function DonorCard({ email, location, id }) {
 				</div>
 			</div>
 			<div>
-				<button className=" font-bold text-primary-500 p-2 rounded-full hover:bg-black/5 duration-300 transition-colors">
-					send Request
-				</button>
+				{select.find((value) => value === id) ? (
+					<button
+						onClick={() =>
+							setSelected((prevSelected) =>
+								prevSelected.filter((el) => el !== id)
+							)
+						}
+						className=" font-bold text-primary-500 p-2 rounded-full bg-black/5 duration-300 transition-colors"
+					>
+						Selected
+					</button>
+				) : (
+					<button
+						onClick={() => setSelected((prevSelected) => [...prevSelected, id])}
+						className="donor-btn font-bold text-primary-500 p-2 rounded-full hover:bg-black/5 duration-300 transition-colors"
+					>
+						send Request
+					</button>
+				)}
 			</div>
 		</div>
 	);

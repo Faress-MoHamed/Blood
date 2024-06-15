@@ -6,7 +6,8 @@ import { useState } from "react";
 import Header from "../Components/Header";
 import Modal from "../Components/Modal";
 import CheckHealth from "../Components/CheckHealth";
-import { Updata_Role } from "../End points/User";
+import DonationRequests from "../Components/DonationRequests";
+import AcceptedRequests from "../Components/AcceptedRequests";
 
 function ServicesUser() {
 	const [IsOpen, setIsOpen] = useState(null);
@@ -74,8 +75,8 @@ function ServicesUser() {
 									notified of upcoming drives.
 								</p>
 								<button
-									onClick={async () => {
-										await Updata_Role();
+									onClick={() => {
+										setIsOpen("requests");
 									}}
 									className="w-56 px-2 h-10 rounded-full flex justify-center items-center font-semibold text-white bg-primary-400 hover:bg-primary-600  transition-colors duration-300"
 								>
@@ -154,6 +155,14 @@ function ServicesUser() {
 				) : IsOpen === "CheckHealth" ? (
 					<Modal handleClose={setIsOpen}>
 						<CheckHealth setIsOpen={setIsOpen} />
+					</Modal>
+				) : IsOpen === "requests" ? (
+					<Modal>
+						<DonationRequests setIsOpen={setIsOpen} />
+					</Modal>
+				) : IsOpen === "AcceptedRequests" ? (
+					<Modal>
+						<AcceptedRequests setIsOpen={setIsOpen} />
 					</Modal>
 				) : null}
 			</main>
