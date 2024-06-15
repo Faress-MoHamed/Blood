@@ -64,11 +64,7 @@ function SearchNearstDonors({ setIsOpen }) {
 			handleSubmit(values);
 		},
 	});
-	return !(
-		req !== "" ||
-		req === "[]" ||
-		JSON.parse(req).length >= 0
-	) ? (
+	return req !== "[]" ? (
 		<>
 			(
 			<motion.main
