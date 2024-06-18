@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 // import * as Yup from "yup";
 import { Check_Health } from "../End points/User";
 import { DNA } from "react-loader-spinner";
-const CheckHealth = ({ setIsOpen }) => {
+const CheckHealth = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [result, setResult] = useState(null);
 	const initialValues = {
@@ -123,74 +123,61 @@ const CheckHealth = ({ setIsOpen }) => {
 
 	return (
 		<>
-			<motion.main
-				initial={{ top: -100 }}
-				animate={{ top: 0 }}
-				exit={{ top: -100 }}
-				transition={{ duration: 0.5, type: "spring" }}
-				className="signUpUser shadow-2xl bg-white relative overflow-y-auto flex justify-center lg:w-full w-[80%]"
-			>
-				<button
-					onClick={() => setIsOpen(null)}
-					className="absolute right-6 top-6"
-				>
-					<IoIosCloseCircle className="w-7 h-7 hover:text-black/70 duration-300" />
-				</button>
-				<div className="container w-[700px] p-8">
-					<div className="">
-						<Header>Check Health</Header>
-					</div>
-					{isLoading ? (
-						<div className="flex items-center justify-center h-4/5">
-							<DNA
-								visible={true}
-								height="80"
-								width="80"
-								ariaLabel="dna-loading"
-								wrapperStyle={{}}
-								wrapperClass="dna-wrapper"
-							/>
-						</div>
-					) : !result ? (
-						<form
-							onSubmit={formik.handleSubmit}
-							className="flex flex-col gap-6 p-5"
-						>
-							{fieldsInfo.map((field) => (
-								<div key={field.key} className="flex flex-col w-full">
-									<InputField
-										key={field.key}
-										name={field.abbreviation}
-										type="number"
-										label={field.name}
-										value={formik.values[field.abbreviation]}
-										handleChange={formik.handleChange}
-										handleBlur={formik.handleBlur}
-									/>
-									{formik.touched[field.abbreviation] &&
-										formik.errors[field.abbreviation] && (
-											<div className="text-red-600/80 ml-2">
-												{formik.errors[field.abbreviation]}
-											</div>
-										)}
-								</div>
-							))}
-							<div className="flex justify-center">
-								<button
-									type="submit"
-									className="rounded-full bg-primary-600 text-white w-[240px] h-[53px] font-semibold"
-								>
-									Check Health
-								</button>
-							</div>
-						</form>
-					) : (
-						<div className="flex items-center justify-center h-4/5">
-							<p className="text-4xl text-primary-500 font-bold ">{result}</p>
-						</div>
-					)}
+
+			<div className="mt-5">
+				<div className="">
+					<Header>Check Health</Header>
 				</div>
-			</motion.main>
+				{isLoading ? (
+					<div className="flex items-center justify-center h-4/5">
+						<DNA
+							visible={true}
+							height="80"
+							width="80"
+							ariaLabel="dna-loading"
+							wrapperStyle={{}}
+							wrapperClass="dna-wrapper"
+						/>
+					</div>
+				) : !result ? (
+					<form
+						onSubmit={formik.handleSubmit}
+						className="flex flex-col gap-6 p-5"
+					>
+						{fieldsInfo.map((field) => (
+							<div key={field.key} className="flex flex-col w-full">
+								<InputField
+									key={field.key}
+									name={field.abbreviation}
+									type="number"
+									label={field.name}
+									value={formik.values[field.abbreviation]}
+									handleChange={formik.handleChange}
+									handleBlur={formik.handleBlur}
+								/>
+								{formik.touched[field.abbreviation] &&
+									formik.errors[field.abbreviation] && (
+										<div className="text-red-600/80 ml-2">
+											{formik.errors[field.abbreviation]}
+										</div>
+									)}
+							</div>
+						))}
+						<div className="flex justify-center">
+							<button
+								type="submit"
+								className="rounded-full bg-primary-600 text-white w-[240px] h-[53px] font-semibold"
+							>
+								Check Health
+							</button>
+						</div>
+					</form>
+				) : (
+					<div className="flex items-center justify-center h-4/5">
+						<p className="text-4xl text-primary-500 font-bold ">{result}</p>
+					</div>
+				)}
+			</div>{" "}
 		</>
 	);
 };

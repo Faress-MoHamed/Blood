@@ -73,7 +73,7 @@ export const Send_verification_code = async (values) => {
 	try {
 		const token = getCookie("jwt");
 
-		const res = await AxiosHandler.post(
+		await AxiosHandler.post(
 			"user/sendVerficationCode",
 			{},
 			{
@@ -94,7 +94,7 @@ export const Send_Request_to_donor = async (values, id) => {
 	try {
 		const token = getCookie("jwt");
 		console.log(token);
-		const res = await AxiosHandler.post(
+		await AxiosHandler.post(
 			`user/patient/requestDonations/${id}`,
 			{ doners: values },
 			{
@@ -201,6 +201,7 @@ export const Updata_Role_donor = async () => {
 
 		// Save the updated user data back to localStorage
 		localStorage.setItem("user", JSON.stringify(updatedUser));
+		toast.success(data);
 
 		return data;
 	} catch (error) {
@@ -230,7 +231,7 @@ export const Updata_Role_Patient = async () => {
 
 		// Save the updated user data back to localStorage
 		localStorage.setItem("user", JSON.stringify(updatedUser));
-
+		toast.success(data);
 		return data;
 	} catch (error) {
 		console.log(error);
@@ -272,6 +273,71 @@ export const Donation_Check = async (id, values) => {
 		toast.error(error.response.data.message || "Un expected Error", {
 			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
 		});
+		return error;
+	}
+};
+export const getDonationCamps = async () => {
+	try {
+		const data = await AxiosHandler.get(`user/bloodBank/getDonationCamps`, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			},
+		});
+		return data;
+	} catch (error) {
+		toast.error(error.response.data.message || "Un expected Error");
+		return error;
+	}
+};
+export const getAcceptsCamps = async (id) => {
+	try {
+		const data = await AxiosHandler.get(
+			`user/bloodBank/acceptedRequests/${id}`,
+			{
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
+			}
+		);
+		return data;
+	} catch (error) {
+		toast.error(error.response.data.message || "Un expected Error");
+		return error;
+	}
+};
+export const CreateCamp = async (values) => {
+	try {
+		const data = await AxiosHandler.post(
+			`user/bloodBank/createDonationCamp`,
+			values,
+			{
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
+			}
+		);
+		console.log(data);
+		return data;
+	} catch (error) {
+		toast.error(error.response.data.message || "Un expected Error");
+		return error;
+	}
+};
+export const UploadPhoto = async (values) => {
+	try {
+		const data = await axios.post(
+			"http://localhost:3000/api/user/upload",
+			values,
+			{
+				headers: {
+					"Content-Type": "multipart/form-data",
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
+			}
+		);
+		return data;
+	} catch (error) {
+		toast.error(error.response.data.message || "Un expected Error");
 		return error;
 	}
 };

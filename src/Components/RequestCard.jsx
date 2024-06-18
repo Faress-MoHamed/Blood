@@ -22,10 +22,10 @@ function RequestCard({
 		const { data } = await Updata_Request(ReqId, "Denied");
 		setLoadingDenied(false);
 		data.message && toast.success(data.message);
-		data ? SetId(ReqId) : setIsOpen(null);
+		data && setIsOpen(null);
 	};
 	return (
-		<div className="flex justify-between items-center">
+		<div className="flex justify-between items-center lg:text-base text-sm">
 			<div className="flex flex-col gap-1">
 				<div className="donorName">Donor Name: Fares</div>
 				<div className="donorId">Donor ID: {donorid || ""}</div>
@@ -55,7 +55,7 @@ function RequestCard({
 			</div>
 			<div className="flex flex-col gap-5 items-center">
 				<div
-					className={`status font-semibold text-lg capitalize ${
+					className={`status font-semibold lg:text-lg text-sm capitalize ${
 						status === "accepted"
 							? "text-green-600"
 							: status === "suspended"

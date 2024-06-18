@@ -10,12 +10,12 @@ function InputField({
 	handleBlur,
 	disabled,
 	label,
+	calender,
+	handleCalenderShow,
+	max,
 }) {
 	const [visible, setVisible] = useState(false);
-	// const [values, setValue] = useState(null);
-	// const { values, handleChange, handleBlur } = useFormikContext();
-	// console.log(name.split(" ").join(""));
-	// console.log(location ? value !== "" : null);
+
 	return (
 		<div className="flex flex-col gap-[4px] font-Poppins w-full">
 			<div className="flex justify-between">
@@ -50,33 +50,28 @@ function InputField({
 			<div className="relative">
 				<input
 					type={!pass ? type : visible ? "text" : "password"}
+					min={0}
+					max={!!max ? max : undefined}
 					id={name.split(" ").join("")}
 					className="placeholder:text-base placeholder:text-[#111111]/40 border py-[15px] px-[24px] caret-[#FF0000] focus:outline-none border-[#5E5E5E]/35 rounded-[12px] h-[56px] w-full"
 					placeholder={label ? label : name}
 					name={name.split(" ").join("")}
-					value={value}
+					value={value !== null ? value : ""}
 					onChange={handleChange}
 					onBlur={handleBlur}
 					disabled={disabled}
 				/>
-				{/* {location && value === "" && (
+				{calender && (
 					<button
+						className="absolute right-4 top-[50%] translate-y-[-50%] bg-black/20 p-2 rounded-full lg:hover:bg-black/40 lg:transition-colors lg:duration-300"
 						onClick={(e) => {
 							e.preventDefault();
-							navigator.geolocation.getCurrentPosition((pos) => {
-								handleChange({
-									target: {
-										name: name.split(" ").join(""),
-										value: `${pos.coords.latitude}, ${pos.coords.longitude}`,
-									},
-								});
-							});
+							handleCalenderShow((e) => !e);
 						}}
-						className={` absolute right-1 flex justify-center items-center rounded-full p-4 bg-black/30 hover:bg-black/60 duration-300 h-4/5  top-2/4 translate-y-[-50%] font-semibold text-white`}
 					>
-						get Current Location
+						show Date
 					</button>
-				)} */}
+				)}
 			</div>
 		</div>
 	);

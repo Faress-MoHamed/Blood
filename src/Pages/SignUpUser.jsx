@@ -3,8 +3,6 @@ import Header from "../Components/Header";
 import InputField from "../Components/InputField";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { motion } from "framer-motion";
-import { IoIosCloseCircle } from "react-icons/io";
 import { Sign_Up } from "../End points/User";
 import toast from "react-hot-toast";
 import { AddToLocalStorage } from "../hooks/AddToLocalStorage";
@@ -65,147 +63,127 @@ function SignUpUser({ setIsOpen }) {
 				console.error(error);
 				toast.error("An error occurred during sign up");
 			} finally {
-				setLoading(false)
+				setLoading(false);
 			}
 		},
 	});
 
 	return (
-		<motion.main
-			initial={{ top: -100, opacity: 0 }}
-			animate={{ top: 0, opacity: 1 }}
-			exit={{ top: -100, opacity: 0 }}
-			transition={{ duration: 0.5, type: "spring" }}
-			className="signUpUser shadow-2xl bg-white relative overflow-y-scroll flex justify-center lg:w-full w-[80%]"
-		>
-			<button className="absolute right-6 top-6" onClick={() => setIsOpen("")}>
-				<IoIosCloseCircle className="w-7 h-7 hover:text-black/70 duration-300" />
-			</button>
-			<div className="container w-[700px] p-8">
-				<Header>Sign Up Now</Header>
-				<form
-					onSubmit={formik.handleSubmit}
-					className="flex flex-col gap-6 p-5"
-				>
-					<div className="flex flex-col w-full">
-						<div className="sides w-full md:flex-row flex-col gap-5 flex justify-between items-center">
-							<InputField
-								name={"username"}
-								type={"text"}
-								value={formik.values.username}
-								handleChange={formik.handleChange}
-								handleBlur={formik.handleBlur}
-							/>
-						</div>
-						<div className="ml-2">
-							{formik.touched.username && formik.errors.username ? (
-								<div className="text-red-600/80">{formik.errors.username}</div>
-							) : null}
-						</div>
-					</div>
-
-					<div className="flex flex-col w-full">
+		<>
+			<Header>Sign Up Now</Header>
+			<form onSubmit={formik.handleSubmit} className="flex flex-col gap-6 p-5">
+				<div className="flex flex-col w-full">
+					<div className="sides w-full md:flex-row flex-col gap-5 flex justify-between items-center">
 						<InputField
-							name={"email"}
-							type={"email"}
-							value={formik.values.email}
-							handleChange={formik.handleChange}
-							handleBlur={formik.handleBlur}
-						/>
-						{formik.touched.email && formik.errors.email ? (
-							<div className="text-red-600/80 ml-2">{formik.errors.email}</div>
-						) : null}
-					</div>
-
-					<div className="flex flex-col w-full">
-						<InputField
-							name={"address"}
+							name={"username"}
 							type={"text"}
-							value={formik.values.address}
+							value={formik.values.username}
 							handleChange={formik.handleChange}
 							handleBlur={formik.handleBlur}
 						/>
-						{formik.touched.address && formik.errors.address ? (
-							<div className="text-red-600/80 ml-2">
-								{formik.errors.address}
-							</div>
+					</div>
+					<div className="ml-2">
+						{formik.touched.username && formik.errors.username ? (
+							<div className="text-red-600/80">{formik.errors.username}</div>
 						) : null}
 					</div>
+				</div>
 
-					<div className="flex flex-col gap-[4px] font-Poppins">
-						<InputField
-							name={"country"}
-							handleBlur={formik.handleBlur}
-							handleChange={formik.handleChange}
-							type={"text"}
-							value={formik.values.country}
-						/>
-						{formik.touched.country && formik.errors.country ? (
-							<div className="text-red-600/80 ml-2">
-								{formik.errors.country}
-							</div>
-						) : null}
-					</div>
+				<div className="flex flex-col w-full">
+					<InputField
+						name={"email"}
+						type={"email"}
+						value={formik.values.email}
+						handleChange={formik.handleChange}
+						handleBlur={formik.handleBlur}
+					/>
+					{formik.touched.email && formik.errors.email ? (
+						<div className="text-red-600/80 ml-2">{formik.errors.email}</div>
+					) : null}
+				</div>
 
-					<div className="flex flex-col w-full">
-						<InputField
-							name={"password"}
-							pass={true}
-							type={"password"}
-							value={formik.values.password}
-							handleChange={formik.handleChange}
-							handleBlur={formik.handleBlur}
-						/>
-						{formik.touched.password && formik.errors.password ? (
-							<div className="text-red-600/80 ml-2">
-								{formik.errors.password}
-							</div>
-						) : null}
-					</div>
+				<div className="flex flex-col w-full">
+					<InputField
+						name={"address"}
+						type={"text"}
+						value={formik.values.address}
+						handleChange={formik.handleChange}
+						handleBlur={formik.handleBlur}
+					/>
+					{formik.touched.address && formik.errors.address ? (
+						<div className="text-red-600/80 ml-2">{formik.errors.address}</div>
+					) : null}
+				</div>
 
-					<div className="flex flex-col w-full">
-						<InputField
-							name={"confirmPassword"}
-							pass={true}
-							type={"password"}
-							value={formik.values.confirmPassword}
-							handleChange={formik.handleChange}
-							handleBlur={formik.handleBlur}
-						/>
-						{formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-							<div className="text-red-600/80 ml-2">
-								{formik.errors.confirmPassword}
-							</div>
-						) : null}
-					</div>
+				<div className="flex flex-col gap-[4px] font-Poppins">
+					<InputField
+						name={"country"}
+						handleBlur={formik.handleBlur}
+						handleChange={formik.handleChange}
+						type={"text"}
+						value={formik.values.country}
+					/>
+					{formik.touched.country && formik.errors.country ? (
+						<div className="text-red-600/80 ml-2">{formik.errors.country}</div>
+					) : null}
+				</div>
 
-					<div>
-						<div className="flex gap-4 items-center cursor-pointer">
-							<input
-								id="terms"
-								type="checkbox"
-								name="terms"
-								required
-								className="accent-primary-500 outline-none bg-black w-4 h-4"
-							/>
-							<label htmlFor="terms">I agree to terms and conditions</label>
+				<div className="flex flex-col w-full">
+					<InputField
+						name={"password"}
+						pass={true}
+						type={"password"}
+						value={formik.values.password}
+						handleChange={formik.handleChange}
+						handleBlur={formik.handleBlur}
+					/>
+					{formik.touched.password && formik.errors.password ? (
+						<div className="text-red-600/80 ml-2">{formik.errors.password}</div>
+					) : null}
+				</div>
+
+				<div className="flex flex-col w-full">
+					<InputField
+						name={"confirmPassword"}
+						pass={true}
+						type={"password"}
+						value={formik.values.confirmPassword}
+						handleChange={formik.handleChange}
+						handleBlur={formik.handleBlur}
+					/>
+					{formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+						<div className="text-red-600/80 ml-2">
+							{formik.errors.confirmPassword}
 						</div>
-					</div>
+					) : null}
+				</div>
 
-					<div className="flex justify-center">
-						<button
-							type="submit"
-							disabled={loading}
-							className={`${
-								loading ? "bg-black/25 text-white" : "bg-primary-600 text-white"
-							} rounded-full  w-[240px] h-[53px] font-semibold`}
-						>
-							{loading ? "Loading..." : "Complete Register"}
-						</button>
+				<div>
+					<div className="flex gap-4 items-center cursor-pointer">
+						<input
+							id="terms"
+							type="checkbox"
+							name="terms"
+							required
+							className="accent-primary-500 outline-none bg-black w-4 h-4"
+						/>
+						<label htmlFor="terms">I agree to terms and conditions</label>
 					</div>
-				</form>
-			</div>
-		</motion.main>
+				</div>
+
+				<div className="flex justify-center">
+					<button
+						type="submit"
+						disabled={loading}
+						className={`${
+							loading ? "bg-black/25 text-white" : "bg-primary-600 text-white"
+						} rounded-full  w-[240px] h-[53px] font-semibold`}
+					>
+						{loading ? "Loading..." : "Complete Register"}
+					</button>
+				</div>
+			</form>
+		</>
 	);
 }
 

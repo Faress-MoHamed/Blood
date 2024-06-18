@@ -40,16 +40,7 @@ function ResetPassword({ setIsOpen }) {
 		},
 	});
 	return (
-		<motion.main
-			initial={{ top: -100, opacity: 0 }}
-			animate={{ top: 0, opacity: 1 }}
-			exit={{ top: -100, opacity: 0 }}
-			transition={{ duration: 0.5, type: "spring" }}
-			className="signUpUser shadow-2xl bg-white relative overflow-y-auto flex justify-center lg:w-full w-[80%]"
-		>
-			<button className="absolute right-6 top-6" onClick={() => setIsOpen("")}>
-				<IoIosCloseCircle className="w-7 h-7 hover:text-black/70 duration-300" />
-			</button>
+		<>
 			<div className="container w-[700px] p-8">
 				<div className="">
 					<Header sizelg={"3xl"} sizesm={"lg"}>
@@ -101,7 +92,7 @@ function ResetPassword({ setIsOpen }) {
 					</div>
 				</form>
 			</div>
-		</motion.main>
+		</>
 	);
 }
 

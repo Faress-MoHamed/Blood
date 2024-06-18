@@ -55,66 +55,53 @@ function ValidationCodeModal({ setIsOpen }) {
 	}
 
 	return (
-		<motion.main
-			initial={{ top: -100, opacity: 0 }}
-			animate={{ top: 0, opacity: 1 }}
-			exit={{ top: -100, opacity: 0 }}
-			transition={{ duration: 0.5, type: "spring" }}
-			className="signUpUser shadow-2xl bg-white relative overflow-y-auto flex justify-center"
-		>
-			<button className="absolute right-6 top-6" onClick={() => setIsOpen("")}>
-				<IoIosCloseCircle className="w-7 h-7 hover:text-black/70 duration-300" />
-			</button>
-			<div className="container w-[700px] p-8">
-				<div className="">
-					<Header sizelg={"3xl"} sizesm={"lg"}>
-						Verify Code
-					</Header>
-				</div>
-				<form
-					onSubmit={formik.handleSubmit}
-					className="bg-white flex flex-col gap-4 justify-center items-center rounded h-2/4"
-				>
-					<div className="flex justify-between items-center w-full">
-						{formik.values.code.map((digit, index) => (
-							<input
-								key={index}
-								id={index}
-								value={digit}
-								maxLength={1}
-								required
-								onChange={(e) => handleChange(e.target.value, index)}
-								onKeyUp={(e) => handleBackspaceAndEnter(e, index)}
-								ref={(reference) =>
-									(otpBoxReference.current[index] = reference)
-								}
-								onBlur={formik.handleBlur}
-								className="h-32 w-20 rounded-xl border-2 border-primary-200 focus:outline-none text-[3rem] text-center"
-							/>
-						))}
-					</div>
-					<div className="text-center">
-						<button
-							type="submit"
-							disabled={loading}
-							className={`${
-								loading ? "bg-black/25 text-white" : "bg-primary-600 text-white"
-							} rounded-full  w-[240px] h-[53px] font-semibold`}
-						>
-							{loading ? "Loading..." : "Verify Code"}
-						</button>
-					</div>
-				</form>
-				<div className="text-center pb-6">
-					<p>
-						If you don't receive any code yet{" "}
-						<span className="text-primary-400 cursor-pointer hover:underline">
-							Click here!
-						</span>
-					</p>
-				</div>
+		<>
+			<div className="">
+				<Header sizelg={"3xl"} sizesm={"lg"}>
+					Verify Code
+				</Header>
 			</div>
-		</motion.main>
+			<form
+				onSubmit={formik.handleSubmit}
+				className="bg-white flex flex-col gap-4 justify-center items-center rounded h-2/4"
+			>
+				<div className="flex justify-between items-center w-full">
+					{formik.values.code.map((digit, index) => (
+						<input
+							key={index}
+							id={index}
+							value={digit}
+							maxLength={1}
+							required
+							onChange={(e) => handleChange(e.target.value, index)}
+							onKeyUp={(e) => handleBackspaceAndEnter(e, index)}
+							ref={(reference) => (otpBoxReference.current[index] = reference)}
+							onBlur={formik.handleBlur}
+							className="h-32 w-20 rounded-xl border-2 border-primary-200 focus:outline-none text-[3rem] text-center"
+						/>
+					))}
+				</div>
+				<div className="text-center">
+					<button
+						type="submit"
+						disabled={loading}
+						className={`${
+							loading ? "bg-black/25 text-white" : "bg-primary-600 text-white"
+						} rounded-full  w-[240px] h-[53px] font-semibold`}
+					>
+						{loading ? "Loading..." : "Verify Code"}
+					</button>
+				</div>
+			</form>
+			<div className="text-center pb-6">
+				<p>
+					If you don't receive any code yet{" "}
+					<span className="text-primary-400 cursor-pointer hover:underline">
+						Click here!
+					</span>
+				</p>
+			</div>
+		</>
 	);
 }
 

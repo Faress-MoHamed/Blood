@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 import SearchNearstDonors from "../Components/SearchNearstDonors";
@@ -8,6 +7,9 @@ import Modal from "../Components/Modal";
 import CheckHealth from "../Components/CheckHealth";
 import DonationRequests from "../Components/DonationRequests";
 import AcceptedRequests from "../Components/AcceptedRequests";
+import Camps from "../Components/Camps";
+import Health from "../Components/Health";
+import SelectDiseas from "../Components/SelectDiseas";
 
 function ServicesUser() {
 	const [IsOpen, setIsOpen] = useState(null);
@@ -110,9 +112,14 @@ function ServicesUser() {
 									in your community. Find nearby events, register to donate, and
 									stay informed about the impact of your contributions
 								</p>
-								<Link className="w-56 px-2 h-10 rounded-full flex justify-center items-center font-semibold text-white bg-primary-400 hover:bg-primary-600  transition-colors duration-300">
+								<button
+									onClick={() => {
+										setIsOpen("camps");
+									}}
+									className="w-56 px-2 h-10 rounded-full flex justify-center items-center font-semibold text-white bg-primary-400 hover:bg-primary-600  transition-colors duration-300"
+								>
 									Find Events
-								</Link>
+								</button>
 							</div>
 						</motion.div>
 						<motion.div
@@ -149,20 +156,32 @@ function ServicesUser() {
 					</div>
 				</div>
 				{IsOpen === "searchDonor" ? (
-					<Modal handleClose={setIsOpen}>
+					<Modal handleClose={() => setIsOpen("")}>
 						<SearchNearstDonors setIsOpen={setIsOpen} />
 					</Modal>
 				) : IsOpen === "CheckHealth" ? (
 					<Modal handleClose={setIsOpen}>
-						<CheckHealth setIsOpen={setIsOpen} />
+						<Health setIsOpen={setIsOpen} />
 					</Modal>
 				) : IsOpen === "requests" ? (
-					<Modal>
+					<Modal handleClose={() => setIsOpen("")}>
 						<DonationRequests setIsOpen={setIsOpen} />
 					</Modal>
 				) : IsOpen === "AcceptedRequests" ? (
-					<Modal>
+					<Modal handleClose={() => setIsOpen("")}>
 						<AcceptedRequests setIsOpen={setIsOpen} />
+					</Modal>
+				) : IsOpen === "camps" ? (
+					<Modal handleClose={() => setIsOpen("")}>
+						<Camps setIsOpen={setIsOpen} />
+					</Modal>
+				) : IsOpen === "Check Health" ? (
+					<Modal handleClose={() => setIsOpen("")}>
+						<CheckHealth />
+					</Modal>
+				) : IsOpen === "Select Dieases" ? (
+					<Modal handleClose={() => setIsOpen("")}>
+						<SelectDiseas />
 					</Modal>
 				) : null}
 			</main>

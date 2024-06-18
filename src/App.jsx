@@ -1,33 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./Pages/Layout";
 import SelectType from "./Pages/SelectType";
 import Home from "./Pages/Home";
 import ServicesUser from "./Pages/ServicesUser";
 import Profile from "./Pages/Profile";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
-import NotFound from "./Components/NotFound";
+import { AuthProvider } from "./Context/AuthProvider";
+import ServicesBloodBank from "./Pages/ServicesBloodBank";
 // import ValidationCode from "./Pages/ValidationCode";
 
 function App() {
-	const token = localStorage.getItem("token");
-	let decodedToken = null;
-	try {
-		if (token) {
-			decodedToken = jwtDecode(token);
+	const [decodedToken, setDecodedToken] = useState(null);
+
+	useEffect(() => {
+		try {
+			const token = window.localStorage.getItem("token");
+			if (token) {
+				const decoded = jwtDecode(token);
+				setDecodedToken(decoded);
+			}
+		} catch (error) {
+			console.log("Failed to decode token", error);
 		}
-	} catch (error) {
-		console.log("Failed to decode token", error);
-	}
+	}, []);
 
 	const routes = [
 		{
 			path: "/",
 			element: <Layout />,
-			errorElement: <NotFound />,
-
 			children: [
 				{
 					index: true,
@@ -36,7 +38,16 @@ function App() {
 				},
 				{
 					path: "/Services",
-					element: decodedToken ? <ServicesUser /> : <SelectType />,
+					element: decodedToken ? (
+						JSON.parse(window.localStorage.getItem("user"))?.role ===
+						"bloodBank" ? (
+							<ServicesBloodBank />
+						) : (
+							<ServicesUser />
+						)
+					) : (
+						<SelectType />
+					),
 				},
 				{
 					path: "/Profile",
@@ -48,21 +59,11 @@ function App() {
 
 	const router = createBrowserRouter(routes);
 
-	const queryClient = new QueryClient({
-		defaultOptions: {
-			queries: {
-				staleTime: 1000,
-				refetchOnReconnect: true,
-				refetchOnWindowFocus: true,
-			},
-		},
-	});
-
 	return (
-		<QueryClientProvider client={queryClient}>
+		<AuthProvider>
 			<Toaster position="top-right" />
 			<RouterProvider router={router} />
-		</QueryClientProvider>
+		</AuthProvider>
 	);
 }
 

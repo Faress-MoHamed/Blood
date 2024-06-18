@@ -110,12 +110,6 @@ function NavBar() {
 								localStorage.clear();
 								window.location.reload();
 							}}
-							initial={{ opacity: 0, y: -100 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{
-								delay: 0.2 * 3,
-								ease: [0.17, 0.55, 0.55, 1],
-							}}
 							className={`relative text-lg bg-primary-400 hover:bg-primary-600 transition-colors duration-300 rounded-full p-2 px-[12px] text-white font-bold  `}
 						>
 							Logout
@@ -133,7 +127,7 @@ function NavBar() {
 							transition={{ duration: 0.5 }}
 							className={`fixed ${
 								open ? "" : "hidden"
-							} right-0 top-0 z-[99999] w-[45%] lg:top-5`}
+							} right-0 top-0 z-[99999] w-[55%] lg:top-5`}
 						>
 							<ul className="flex  h-screen w-full flex-col items-start justify-start gap-10 bg-white p-3 backdrop-blur-lg lg:hidden">
 								<button
@@ -143,45 +137,29 @@ function NavBar() {
 								>
 									<i className="fa-solid fa-xmark"></i>
 								</button>
-								{navLinksMobile.map((item) => {
+								{navLinksMobile.map((item, index) => {
 									return (
-										<>
-											<motion.li
-												initial={{ opacity: 0, x: 100 }}
-												animate={{ opacity: 1, x: 0 }}
-												transition={{
-													delay: 0.2 * item.id,
-													ease: [0.17, 0.55, 0.55, 1],
-												}}
-												className={`relative text-lg before:absolute before:bottom-[-5px] before:left-0 before:h-[3px] before:w-0 before:bg-slate-950 before:transition-all before:duration-300 hover:before:w-full ${
-													currentPath === item.name ? "before:w-full" : ""
-												}`}
-												key={item.id}
-											>
-												<NavLink to={`${item.link}`} className="cursor-pointer">
-													{item.name}
-												</NavLink>
-											</motion.li>
-										</>
+										<motion.li
+											initial={{ opacity: 0, x: 100 }}
+											animate={{ opacity: 1, x: 0 }}
+											transition={{
+												delay: 0.2 * item.id,
+												ease: [0.17, 0.55, 0.55, 1],
+											}}
+											className={`relative text-lg before:absolute before:bottom-[-5px] before:left-0 before:h-[3px] before:w-0 before:bg-slate-950 before:transition-all before:duration-300 hover:before:w-full ${
+												currentPath === item.name ||
+												window.location.pathname === item.link
+													? "before:w-full"
+													: ""
+											}`}
+											key={index}
+										>
+											<NavLink to={`${item.link}`} className="cursor-pointer">
+												{item.name}
+											</NavLink>
+										</motion.li>
 									);
 								})}
-								{localStorage.getItem("token") && (
-									<motion.button
-										onClick={() => {
-											localStorage.clear();
-											window.location.reload();
-										}}
-										initial={{ opacity: 0, x: 100 }}
-										animate={{ opacity: 1, x: 0 }}
-										transition={{
-											delay: 0.2 * 3,
-											ease: [0.17, 0.55, 0.55, 1],
-										}}
-										className={`relative text-lg before:absolute before:bottom-[-5px] before:left-0 before:h-[3px] before:w-0 before:bg-slate-950 before:transition-all before:duration-300 hover:before:w-full `}
-									>
-										Logout
-									</motion.button>
-								)}
 							</ul>
 						</motion.div>
 					)}

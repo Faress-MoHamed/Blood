@@ -1,8 +1,8 @@
-function DonorCard({ email, location, id, setSelected, select }) {
+function DonorCard({ email, location, id, setSelected, select, username }) {
 	return (
 		<div className="rounded-lg flex items-center justify-between">
 			<div className="flex gap-5">
-				<div className="image rounded-full">
+				<div className="image rounded-full lg:block hidden">
 					<img
 						src="./download.jpeg"
 						className=" rounded-full w-10 h-10"
@@ -10,7 +10,12 @@ function DonorCard({ email, location, id, setSelected, select }) {
 					/>
 				</div>
 				<div className="details">
-					<div className="email">{email}</div>
+					<div>
+						<div className="username">
+							Username: <span className="font-bold">{username}</span>
+						</div>
+						<div className="email">Email: {email}</div>
+					</div>
 					<div className="location">{location.address}</div>
 				</div>
 			</div>
@@ -31,7 +36,7 @@ function DonorCard({ email, location, id, setSelected, select }) {
 						onClick={() => setSelected((prevSelected) => [...prevSelected, id])}
 						className="donor-btn font-bold text-primary-500 p-2 rounded-full hover:bg-black/5 duration-300 transition-colors"
 					>
-						send Request
+						Request
 					</button>
 				)}
 			</div>
