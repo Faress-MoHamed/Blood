@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import InputField from "./InputField";
 import { IoIosCloseCircle } from "react-icons/io";
-import { AddToLocalStorage } from "../hooks/AddToLocalStorage";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -26,16 +25,14 @@ function ResetPassword({ setIsOpen }) {
 			setLoading(false);
 			console.log(res);
 			if (res.status === "success") {
-				AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
-				AddToLocalStorage(
-					"user",
-					JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
-				);
+				// AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
+				// AddToLocalStorage(
+				// 	"user",
+				// 	JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
+				// );
 				navigate("/");
-				window.location.reload();
-				toast.success("Sign In Successfully ✔👏", {
-					className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
-				});
+				// window.location.reload();
+				toast.success("Sign In Successfully");
 			}
 		},
 	});

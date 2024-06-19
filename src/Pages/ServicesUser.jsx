@@ -7,7 +7,6 @@ import Modal from "../Components/Modal";
 import CheckHealth from "../Components/CheckHealth";
 import DonationRequests from "../Components/DonationRequests";
 import AcceptedRequests from "../Components/AcceptedRequests";
-import Camps from "../Components/Camps";
 import Health from "../Components/Health";
 import SelectDiseas from "../Components/SelectDiseas";
 
@@ -94,43 +93,16 @@ function ServicesUser() {
 						<motion.div
 							initial={{ opacity: 0, x: 100 }}
 							transition={{
-								duration: 0.5,
-								type: "spring",
-							}}
-							animate={{ opacity: 1, x: 0 }}
-							className="flex items-center justify-between lg:w-2/4 w-full "
-						>
-							<div className="hidden w-[150px] lg:block">
-								<img src="./icon-person-heart-purple.png" alt="" />
-							</div>
-							<div className="flex w-full flex-col justify-between  h-full gap-3 p-0 lg:p-12 lg:pb-0">
-								<header className="capitalize text-xl font-bold text-primary-600">
-									Join Upcoming Blood Donation Events.
-								</header>
-								<p className="text-lg text-black/85 leading-8">
-									Participate in our blood donation events and make a difference
-									in your community. Find nearby events, register to donate, and
-									stay informed about the impact of your contributions
-								</p>
-								<button
-									onClick={() => {
-										setIsOpen("camps");
-									}}
-									className="w-56 px-2 h-10 rounded-full flex justify-center items-center font-semibold text-white bg-primary-400 hover:bg-primary-600  transition-colors duration-300"
-								>
-									Find Events
-								</button>
-							</div>
-						</motion.div>
-						<motion.div
-							initial={{ opacity: 0, x: 100 }}
-							transition={{
 								duration: 0.3,
 								type: "spring",
 							}}
 							animate={{ opacity: 1, x: 0 }}
 							className="flex items-center justify-between lg:w-2/4 w-full"
 						>
+							{" "}
+							<div className="hidden w-[150px] lg:block ">
+								<img src="/icon-hand-heart.png" alt="" />
+							</div>
 							<div className="flex w-full flex-col justify-between h-full gap-3 p-0 lg:p-12 lg:pb-0">
 								<header className="capitalize text-xl font-bold text-primary-600">
 									know everything about your health Now.
@@ -148,9 +120,6 @@ function ServicesUser() {
 								>
 									Now Go & check your health
 								</button>
-							</div>
-							<div className="hidden w-[150px] lg:block ">
-								<img src="/icon-hand-heart.png" alt="" />
 							</div>
 						</motion.div>
 					</div>
@@ -170,10 +139,6 @@ function ServicesUser() {
 				) : IsOpen === "AcceptedRequests" ? (
 					<Modal handleClose={() => setIsOpen("")}>
 						<AcceptedRequests setIsOpen={setIsOpen} />
-					</Modal>
-				) : IsOpen === "camps" ? (
-					<Modal handleClose={() => setIsOpen("")}>
-						<Camps setIsOpen={setIsOpen} />
 					</Modal>
 				) : IsOpen === "Check Health" ? (
 					<Modal handleClose={() => setIsOpen("")}>

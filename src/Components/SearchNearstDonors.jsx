@@ -20,7 +20,7 @@ function SearchNearstDonors({ setIsOpen }) {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [select, setSelected] = useState([]);
-	let req = sessionStorage.getItem("req");
+	let req = JSON.stringify(sessionStorage.getItem("req") || {});
 	console.log(req);
 	const handleRequestSend = async () => {
 		setLoading(true);
@@ -30,7 +30,7 @@ function SearchNearstDonors({ setIsOpen }) {
 	};
 	useEffect(() => {
 		async function handleUpdateRole() {
-			if (JSON.parse(localStorage.getItem("user")).role !== "patient") {
+			if (JSON.parse(localStorage.getItem("user"))?.role !== "patient") {
 				await Updata_Role_Patient();
 			}
 		}
@@ -41,7 +41,7 @@ function SearchNearstDonors({ setIsOpen }) {
 
 		const data = await Search_Nearest_Donors(values);
 		console.log(data);
-		if (data.nearestDonors) {
+		if (data?.nearestDonors) {
 			setResult(data.nearestDonors);
 			setLoading(false);
 		} else if (data.response.data.message) {
@@ -74,172 +74,169 @@ function SearchNearstDonors({ setIsOpen }) {
 	});
 	return req !== "[]" ? (
 		<>
-			<>
-				<div className="text-[10px]">
-					<Header sizelg={"2xl"} sizesm={"xl"}>
-						{!result ? "I Need Donors" : "list of Donors"}
-					</Header>
+			<div className="text-[10px]">
+				<Header sizelg={"2xl"} sizesm={"xl"}>
+					{!result ? "I Need Donors" : "list of Donors"}
+				</Header>
+			</div>
+			{loading && !error ? (
+				<div className="flex items-center justify-center h-4/5">
+					<DNA
+						visible={true}
+						height="80"
+						width="80"
+						ariaLabel="dna-loading"
+						wrapperStyle={{}}
+						wrapperClass="dna-wrapper"
+					/>
 				</div>
-				{loading && !error ? (
-					<div className="flex items-center justify-center h-4/5">
-						<DNA
-							visible={true}
-							height="80"
-							width="80"
-							ariaLabel="dna-loading"
-							wrapperStyle={{}}
-							wrapperClass="dna-wrapper"
+			) : error ? (
+				<div className="flex items-center justify-center h-4/5">
+					<p className="text-red-500">{error}</p>
+				</div>
+			) : result ? (
+				<div className="flex-col flex justify-between h-[80%]">
+					<div className="flex justify-between">
+						<button
+							onClick={() => handleSubmit(formik.values)}
+							className="font-semibold  text-black  hover:underline p-2 rounded-full  duration-300 transition-colors"
+						>
+							Refresh
+						</button>
+						<button
+							onClick={() => {
+								const Btns = document.querySelectorAll(".donor-btn");
+								Btns.forEach((el) => el.click());
+							}}
+							className="font-bold text-white bg-primary-400 hover:bg-primary-600 p-2 rounded-full  duration-300 transition-colors"
+						>
+							Select All
+						</button>
+					</div>
+					<div className="flex flex-col gap-5 p-4 overflow-y-auto h-[60%]">
+						{result.map((el) => (
+							<DonorCard
+								email={el.email}
+								location={el.location}
+								key={el.email}
+								id={el._id}
+								setSelected={setSelected}
+								select={select}
+								username={el.username}
+							/>
+						))}
+					</div>
+					<div className="flex justify-center">
+						<button
+							onClick={(e) => {
+								e.preventDefault();
+								handleRequestSend();
+							}}
+							disabled={loading}
+							className={`${
+								loading
+									? "bg-slate-400 text-black"
+									: "bg-primary-600 text-white"
+							} rounded-full  w-[240px] h-[53px] font-semibold`}
+						>
+							{loading ? "loading..." : "Send Requests to Donors"}
+						</button>
+					</div>
+				</div>
+			) : (
+				<form
+					onSubmit={formik.handleSubmit}
+					className="flex flex-col gap-6 p-5"
+				>
+					<div className="flex flex-col w-full">
+						<InputField
+							name={"hospitalAddress"}
+							type={"text"}
+							value={formik.values.hospitalAddress}
+							handleChange={formik.handleChange}
+							handleBlur={formik.handleBlur}
 						/>
-					</div>
-				) : error ? (
-					<div className="flex items-center justify-center h-4/5">
-						<p className="text-red-500">{error}</p>
-					</div>
-				) : result ? (
-					<div className="flex-col flex justify-between h-[80%]">
-						<div className="flex justify-between">
-							<button
-								onClick={() => handleSubmit(formik.values)}
-								className="font-semibold  text-black  hover:underline p-2 rounded-full  duration-300 transition-colors"
-							>
-								Refresh
-							</button>
-							<button
-								onClick={() => {
-									const Btns = document.querySelectorAll(".donor-btn");
-									Btns.forEach((el) => el.click());
-								}}
-								className="font-bold text-white bg-primary-400 hover:bg-primary-600 p-2 rounded-full  duration-300 transition-colors"
-							>
-								Select All
-							</button>
-						</div>
-						<div className="flex flex-col gap-5 p-4 overflow-y-auto h-[60%]">
-							{result.map((el) => (
-								<DonorCard
-									email={el.email}
-									location={el.location}
-									key={el.email}
-									id={el._id}
-									setSelected={setSelected}
-									select={select}
-									username={el.username}
-								/>
-							))}
-						</div>
-						<div className="flex justify-center">
-							<button
-								onClick={(e) => {
-									e.preventDefault();
-									handleRequestSend();
-								}}
-								disabled={loading}
-								className={`${
-									loading
-										? "bg-slate-400 text-black"
-										: "bg-primary-600 text-white"
-								} rounded-full  w-[240px] h-[53px] font-semibold`}
-							>
-								{loading ? "loading..." : "Send Requests to Donors"}
-							</button>
-						</div>
-					</div>
-				) : (
-					<form
-						onSubmit={formik.handleSubmit}
-						className="flex flex-col gap-6 p-5"
-					>
-						<div className="flex flex-col w-full">
-							<InputField
-								name={"hospitalAddress"}
-								type={"text"}
-								value={formik.values.hospitalAddress}
-								handleChange={formik.handleChange}
-								handleBlur={formik.handleBlur}
-							/>
-							{formik.touched.hospitalAddress &&
-							formik.errors.hospitalAddress ? (
-								<div className="text-red-600/80 ml-2">
-									{formik.errors.hospitalAddress}
-								</div>
-							) : null}
-						</div>
-						<div className="flex flex-col w-full">
-							<InputField
-								name={"hospitalName"}
-								type={"text"}
-								value={formik.values.hospitalName}
-								handleChange={formik.handleChange}
-								handleBlur={formik.handleBlur}
-							/>
-							{formik.touched.hospitalName && formik.errors.hospitalName ? (
-								<div className="text-red-600/80 ml-2">
-									{formik.errors.hospitalName}
-								</div>
-							) : null}
-						</div>
-						<div className="flex flex-col gap-[4px] font-Poppins">
-							<label
-								htmlFor="bloodType"
-								className="text-base capitalize font-[400] text-[#666666]"
-							>
-								Select Blood Type
-							</label>
-							<div className="relative">
-								<div className="flex flex-col w-full">
-									<BloodTypeSelect
-										value={formik.values.bloodGroup}
-										handleChange={formik.handleChange}
-										handleBlur={formik.handleBlur}
-									/>
-								</div>
-
-								{formik.touched.bloodGroup && formik.errors.bloodGroup ? (
-									<div className="text-red-600/80 ml-2">
-										{formik.errors.bloodGroup}
-									</div>
-								) : null}
+						{formik.touched.hospitalAddress && formik.errors.hospitalAddress ? (
+							<div className="text-red-600/80 ml-2">
+								{formik.errors.hospitalAddress}
 							</div>
-						</div>
-						<div className="flex flex-col gap-[4px] font-Poppins">
-							<InputField
-								name={"bloodUnits"}
-								handleBlur={formik.handleBlur}
-								handleChange={formik.handleChange}
-								type={"number"}
-								value={formik.values.bloodUnits}
-							/>
-							{formik.touched.bloodUnits && formik.errors.bloodUnits ? (
+						) : null}
+					</div>
+					<div className="flex flex-col w-full">
+						<InputField
+							name={"hospitalName"}
+							type={"text"}
+							value={formik.values.hospitalName}
+							handleChange={formik.handleChange}
+							handleBlur={formik.handleBlur}
+						/>
+						{formik.touched.hospitalName && formik.errors.hospitalName ? (
+							<div className="text-red-600/80 ml-2">
+								{formik.errors.hospitalName}
+							</div>
+						) : null}
+					</div>
+					<div className="flex flex-col gap-[4px] font-Poppins">
+						<label
+							htmlFor="bloodType"
+							className="text-base capitalize font-[400] text-[#666666]"
+						>
+							Select Blood Type
+						</label>
+						<div className="relative">
+							<div className="flex flex-col w-full">
+								<BloodTypeSelect
+									value={formik.values.bloodGroup}
+									handleChange={formik.handleChange}
+									handleBlur={formik.handleBlur}
+								/>
+							</div>
+
+							{formik.touched.bloodGroup && formik.errors.bloodGroup ? (
 								<div className="text-red-600/80 ml-2">
-									{formik.errors.bloodUnits}
+									{formik.errors.bloodGroup}
 								</div>
 							) : null}
 						</div>
-						<div className="flex flex-col w-full">
-							<InputField
-								name={"nationalId"}
-								type={"number"}
-								value={formik.values.nationalId}
-								handleChange={formik.handleChange}
-								handleBlur={formik.handleBlur}
-							/>
-							{formik.touched.nationalId && formik.errors.nationalId ? (
-								<div className="text-red-600/80 ml-2">
-									{formik.errors.nationalId}
-								</div>
-							) : null}
-						</div>
-						<div className="flex justify-center">
-							<button
-								type="submit"
-								className="rounded-full bg-primary-600 text-white w-[240px] h-[53px] font-semibold"
-							>
-								Complete Register
-							</button>
-						</div>
-					</form>
-				)}
-			</>
+					</div>
+					<div className="flex flex-col gap-[4px] font-Poppins">
+						<InputField
+							name={"bloodUnits"}
+							handleBlur={formik.handleBlur}
+							handleChange={formik.handleChange}
+							type={"number"}
+							value={formik.values.bloodUnits}
+						/>
+						{formik.touched.bloodUnits && formik.errors.bloodUnits ? (
+							<div className="text-red-600/80 ml-2">
+								{formik.errors.bloodUnits}
+							</div>
+						) : null}
+					</div>
+					<div className="flex flex-col w-full">
+						<InputField
+							name={"nationalId"}
+							type={"number"}
+							value={formik.values.nationalId}
+							handleChange={formik.handleChange}
+							handleBlur={formik.handleBlur}
+						/>
+						{formik.touched.nationalId && formik.errors.nationalId ? (
+							<div className="text-red-600/80 ml-2">
+								{formik.errors.nationalId}
+							</div>
+						) : null}
+					</div>
+					<div className="flex justify-center">
+						<button
+							type="submit"
+							className="rounded-full bg-primary-600 text-white w-[240px] h-[53px] font-semibold"
+						>
+							Complete Register
+						</button>
+					</div>
+				</form>
+			)}
 		</>
 	) : (
 		<AcceptedRequests setIsOpen={setIsOpen} />

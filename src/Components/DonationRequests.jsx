@@ -1,30 +1,47 @@
-import { motion } from "framer-motion";
-import { IoIosCloseCircle } from "react-icons/io";
 import Header from "./Header";
 import RequestCard from "./RequestCard";
 import { Donation_Requests, Updata_Role_donor } from "../End points/User";
 import { useEffect, useState } from "react";
 import { DNA } from "react-loader-spinner";
 import DonationCheck from "./DonationCheck";
+
 function DonationRequests({ setIsOpen }) {
-	const [Isloading, setIsLoading] = useState(null);
-	let [data, setData] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
+	const [data, setData] = useState([]);
 	const [IsID, SetId] = useState(null);
 
 	const handleDonation = async () => {
 		setIsLoading(true);
-		if (JSON.parse(localStorage.getItem("user")).role === "patient") {
-			await Updata_Role_donor();
+		try {
+			if (JSON.parse(localStorage.getItem("user"))?.role === "patient") {
+				await Updata_Role_donor();
+			}
+			const response = await Donation_Requests();
+			setData(
+				response.data?.filter(
+					(el) => el.status !== "accepted" && el.status !== "Denied"
+				) || []
+			);
+		} catch (error) {
+			console.error("Error fetching donation requests:", error);
+		} finally {
+			setIsLoading(false);
 		}
-		const { data } = await Donation_Requests();
-		setData(
-			data?.filter((el) => el.status !== "accepted" && el.status !== "Denied")
-		);
-		setIsLoading(false);
 	};
+
 	useEffect(() => {
 		handleDonation();
 	}, []);
+
+	const handleRefresh = () => {
+		handleDonation();
+	};
+
+	const handleRequestClick = (id) => {
+		SetId(id);
+		setIsOpen(true);
+	};
+
 	return (
 		<>
 			{IsID ? (
@@ -37,12 +54,12 @@ function DonationRequests({ setIsOpen }) {
 						</Header>
 					</div>
 					<button
-						onClick={() => handleDonation()}
-						className="font-semibold bg-black/15 hover:bg-black/25 text-black  hover:underline p-2 rounded-full  duration-300 transition-colors"
+						onClick={handleRefresh}
+						className="font-semibold bg-black/15 hover:bg-black/25 text-black hover:underline p-2 rounded-full duration-300 transition-colors"
 					>
 						Refresh
 					</button>
-					{Isloading && (
+					{isLoading && (
 						<div className="flex items-center justify-center h-4/5">
 							<DNA
 								visible={true}
@@ -55,19 +72,17 @@ function DonationRequests({ setIsOpen }) {
 						</div>
 					)}
 					<div className="py-4">
-						{data?.map((el, index) => (
+						{data.map((el, index) => (
 							<div className="mt-5" key={el._id}>
 								<RequestCard
-									key={el?._id}
-									SetId={SetId}
+									SetId={handleRequestClick}
 									setIsOpen={setIsOpen}
-									ReqId={el?._id}
-									donorid={el?.donor}
-									status={el?.status}
-									donationCheck={el?.donationCheck}
+									ReqId={el._id}
+									donorid={el.donor}
+									status={el.status}
+									donationCheck={el.donationCheck}
 								/>
-
-								{index !== data?.length - 1 && (
+								{index !== data.length - 1 && (
 									<div className="flex justify-center items-center my-5">
 										<div className="bg-black/75 h-[2px] w-[80%] text-center"></div>
 									</div>

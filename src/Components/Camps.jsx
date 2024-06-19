@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getDonationCamps } from "../End points/User";
 import Header from "./Header";
 import { DNA } from "react-loader-spinner";
-import CampCard from "./CampCard";
+import DonateCampCard from "./DonateCampCard";
 
 function Camps({ setIsOpen }) {
 	const [camps, setCamps] = useState(null);
@@ -27,7 +27,7 @@ function Camps({ setIsOpen }) {
 					Donation Camps
 				</Header>
 			</div>
-			{loading ? (
+			{loading && (
 				<div className="flex items-center justify-center h-4/5">
 					<DNA
 						visible={true}
@@ -38,8 +38,25 @@ function Camps({ setIsOpen }) {
 						wrapperClass="dna-wrapper"
 					/>
 				</div>
-			) : (
-				camps?.map((el) => <CampCard date={el?.date} name={el?.name} />)
+			)}
+			{camps && (
+				<div className="flex flex-col gap-5">
+					{camps?.map((el, index) => (
+						<>
+							<DonateCampCard
+								CampId={el?._id}
+								bloodBankId={el?.bloodBank}
+								CampDate={el?.date}
+								name={el?.name}
+							/>
+							{index !== camps.length - 1 && (
+								<div className="flex justify-center items-center">
+									<div className="bg-black/75 h-[2px] w-[80%] text-center"></div>
+								</div>
+							)}
+						</>
+					))}
+				</div>
 			)}
 		</>
 	);

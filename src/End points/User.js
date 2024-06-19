@@ -7,9 +7,7 @@ export const Sign_Up = async (values) => {
 		const { data } = await AxiosHandler.post("user/signup", values);
 		return data;
 	} catch (err) {
-		toast.error(err.response.data.message || "Un expected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
+		toast.error(err?.response?.data?.message || "Un expected Error");
 	}
 };
 export const Sign_In = async (values) => {
@@ -17,9 +15,7 @@ export const Sign_In = async (values) => {
 		const { data } = await AxiosHandler.post("user/login", values);
 		return data;
 	} catch (err) {
-		toast.error(err.response.data.message || "Un expected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
+		toast.error(err?.response?.data?.message || "Un expected Error");
 	}
 };
 export const Reset_password = async (values) => {
@@ -27,9 +23,7 @@ export const Reset_password = async (values) => {
 		const { data } = await AxiosHandler.post("user/resetPassword", values);
 		return data;
 	} catch (err) {
-		toast.error(err.response.data.message || "Un expected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
+		toast.error(err?.response?.data?.message || "Un expected Error");
 	}
 };
 
@@ -41,9 +35,7 @@ export const Forget_Password = async (values) => {
 	} catch (err) {
 		console.log(err);
 
-		toast.error(err.response.data.message || "Un expected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
+		toast.error(err?.response?.data?.message || "Un expected Error");
 	}
 };
 export const Verify_Email = async (values) => {
@@ -58,9 +50,7 @@ export const Verify_Email = async (values) => {
 	} catch (err) {
 		console.log(err);
 
-		toast.error(err.response.data.message || "Un expected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
+		toast.error(err?.response?.data?.message || "Un expected Error");
 	}
 };
 const getCookie = (name) => {
@@ -84,16 +74,13 @@ export const Send_verification_code = async (values) => {
 		);
 		toast.success("Code sended succussfully");
 	} catch (err) {
-		toast.error(err.response.data.message || "Un expected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
+		toast.error(err?.response?.data?.message || "Un expected Error");
 	}
 };
 
 export const Send_Request_to_donor = async (values, id) => {
 	try {
 		const token = getCookie("jwt");
-		console.log(token);
 		await AxiosHandler.post(
 			`user/patient/requestDonations/${id}`,
 			{ doners: values },
@@ -106,9 +93,7 @@ export const Send_Request_to_donor = async (values, id) => {
 		toast.success("You Succeffuly Sent Donations Requests");
 	} catch (err) {
 		console.log(err);
-		toast.error(err.response.data.message || "Un expected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
+		toast.error(err?.response?.data?.message || "Un expected Error");
 	}
 };
 export const Donation_Requests = async () => {
@@ -124,9 +109,7 @@ export const Donation_Requests = async () => {
 
 		return res;
 	} catch (err) {
-		toast.error(err.response?.data.message || "Unexpected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
+		toast.error(err?.response?.data?.message || "Un expected Error");
 	}
 };
 export const Accepted_Requests = async () => {
@@ -139,9 +122,7 @@ export const Accepted_Requests = async () => {
 		console.log(res);
 		return res;
 	} catch (err) {
-		toast.error(err.response.data.message || "Un expected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
+		toast.error(err?.response?.data?.message || "Un expected Error");
 	}
 };
 export const Check_Health = async (values) => {
@@ -154,9 +135,7 @@ export const Check_Health = async (values) => {
 	} catch (err) {
 		console.log(err);
 
-		toast.error(err.response.data.message || "Un expected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
+		toast.error(err?.response?.data?.message || "Un expected Error");
 	}
 };
 export const Search_Nearest_Donors = async (values) => {
@@ -171,16 +150,14 @@ export const Search_Nearest_Donors = async (values) => {
 			}
 		);
 		return data;
-	} catch (error) {
-		toast.error(error.response.data.message || "Un expected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
-		return error;
+	} catch (err) {
+		toast.error(err?.response?.data?.message || "Un expected Error");
+		return err;
 	}
 };
 export const Updata_Role_donor = async () => {
 	try {
-		const data = await AxiosHandler.post(
+		const { data } = await AxiosHandler.post(
 			"user/updateRole",
 			{ role: "donor" },
 
@@ -210,7 +187,7 @@ export const Updata_Role_donor = async () => {
 };
 export const Updata_Role_Patient = async () => {
 	try {
-		const data = await AxiosHandler.post(
+		const { data } = await AxiosHandler.post(
 			"user/updateRole",
 			{ role: "patient" },
 
@@ -221,7 +198,7 @@ export const Updata_Role_Patient = async () => {
 			}
 		);
 		// Retrieve the existing user data from localStorage
-		const existingUser = JSON.parse(localStorage.getItem("user"));
+		const existingUser = JSON.parse(localStorage.getItem("user")) || {};
 
 		// Update the user data with the new role
 		const updatedUser = {
@@ -250,11 +227,9 @@ export const Updata_Request = async (id, status) => {
 		);
 		data.status === "error" && toast.error(data.message);
 		return data;
-	} catch (error) {
-		toast.error(error.response.data.message || "Un expected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
-		return error;
+	} catch (err) {
+		toast.error(err?.response?.data?.message || "Un expected Error");
+		return err;
 	}
 };
 export const Donation_Check = async (id, values) => {
@@ -270,9 +245,7 @@ export const Donation_Check = async (id, values) => {
 		);
 		return data;
 	} catch (error) {
-		toast.error(error.response.data.message || "Un expected Error", {
-			className: "w-[450px] h-[75px] text-base p-2 uppperCase",
-		});
+		toast.error(error.response.data.message || "Un expected Error");
 		return error;
 	}
 };
@@ -325,19 +298,16 @@ export const CreateCamp = async (values) => {
 };
 export const UploadPhoto = async (values) => {
 	try {
-		const data = await axios.post(
-			"http://localhost:3000/api/user/upload",
-			values,
-			{
-				headers: {
-					"Content-Type": "multipart/form-data",
-					Authorization: `Bearer ${localStorage.getItem("token")}`,
-				},
-			}
-		);
+		const { data } = await AxiosHandler.post("user/upload", values, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			},
+		});
 		return data;
 	} catch (error) {
-		toast.error(error.response.data.message || "Un expected Error");
+		// console.log(error.response.data.message.message);
+		toast.error(error.response.data.message.message || "Un expected Error");
 		return error;
 	}
 };

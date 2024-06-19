@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import Header from "../Components/Header";
 import toast from "react-hot-toast";
-import { AddToLocalStorage } from "../hooks/AddToLocalStorage";
 import { Sign_Up } from "../End points/User";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -46,11 +45,11 @@ function SignUpBloodBank({ setIsOpen }) {
 				setLoading(true);
 				const res = await Sign_Up({ ...values, role: "bloodBank" });
 				if (res.status === "success") {
-					AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
-					AddToLocalStorage(
-						"user",
-						JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
-					);
+					// AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
+					// AddToLocalStorage(
+					// 	"user",
+					// 	JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
+					// );
 					navigate("/");
 					window.location.reload();
 					toast.success("Sign In Successfully ✔👏");

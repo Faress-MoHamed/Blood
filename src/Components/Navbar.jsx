@@ -2,6 +2,7 @@ import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { NavLink } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 const navLinks = [
 	{
 		id: 0,
@@ -39,6 +40,8 @@ const navLinksMobile = [
 function NavBar() {
 	const [open, setOpen] = useState(false);
 	const currentPath = window.location.pathname.slice(1);
+	const { setAuth } = useAuth();
+
 	const controls = useAnimation();
 	useEffect(() => {
 		if (open) {
@@ -88,6 +91,12 @@ function NavBar() {
 							>
 								<NavLink
 									to={`${item.link}`}
+									onClick={() =>
+										window.scrollTo({
+											top: 0,
+											behavior: "smooth",
+										})
+									}
 									className="cursor-pointer relative text-lg before:absolute before:bottom-[-5px] before:left-0 before:h-[2px] before:w-0 before:bg-primary-700 before:transition-all before:duration-300 hover:before:w-full"
 								>
 									{item.name}
@@ -109,6 +118,7 @@ function NavBar() {
 							onClick={() => {
 								localStorage.clear();
 								window.location.reload();
+								setAuth(null);
 							}}
 							className={`relative text-lg bg-primary-400 hover:bg-primary-600 transition-colors duration-300 rounded-full p-2 px-[12px] text-white font-bold  `}
 						>

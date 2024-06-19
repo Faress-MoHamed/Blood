@@ -1,17 +1,18 @@
-import { useLocation, Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-
 const RequireAuth = () => {
-	const { auth } = useAuth();
 	const location = useLocation();
+	const { auth } = useAuth();
+	console.log(auth);
 
-	return auth ? (
-		<Outlet />
-	) : auth?.user ? (
-		<Navigate to="/Services" state={{ from: location }} replace />
-	) : (
-		<Navigate to="/sign" state={{ from: location }} replace />
+	return (
+		<>
+			{auth?.user ? (
+				<Outlet />
+			) : (
+				<Navigate to="/sign" state={{ from: location }} replace />
+			)}
+		</>
 	);
 };
-
 export default RequireAuth;

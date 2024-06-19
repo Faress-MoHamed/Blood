@@ -1,18 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../Components/InputField";
-import { IoIosCloseCircle } from "react-icons/io";
-import { motion } from "framer-motion";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Sign_In } from "../End points/User";
 import toast from "react-hot-toast";
-import { AddToLocalStorage } from "../hooks/AddToLocalStorage";
 import { useState } from "react";
-import Cookies from "js-cookie";
 import useAuth from "./../hooks/useAuth";
 
 function SignIn({ setIsOpen }) {
 	const [loading, setLoading] = useState(false);
+	// const [UserAuth, setUserAuth] = useLocalStorage("user", "");
+	// const [TokenAuth, setTokenAuth] = useLocalStorage("token", "");
 	const navigate = useNavigate();
 	const { setAuth } = useAuth();
 
@@ -24,6 +22,7 @@ function SignIn({ setIsOpen }) {
 			.min(8, "Password must be at least 8 characters")
 			.required("Password is required"),
 	});
+
 	const formik = useFormik({
 		initialValues: {
 			email: "",
@@ -35,26 +34,21 @@ function SignIn({ setIsOpen }) {
 			const res = await Sign_In(values);
 			setLoading(false);
 			if (res.status === "success") {
-				AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
-				AddToLocalStorage(
-					"user",
-					JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
-				);
-				if (typeof Cookies !== "undefined" && res && res.token) {
-					Cookies.set("jwt", res.token);
-				} else {
-					console.error(
-						"Cookies library is not loaded or res.token is undefined"
-					);
-				}
+				console.log("Sign-In Response:", res);
+				localStorage.setItem("user", JSON.stringify(res.data.user));
+				localStorage.setItem("token", res.token);
+				setAuth(res.data);
+				// console.log("UserAuth:", UserAuth);
+				// console.log("TokenAuth:", TokenAuth);
 				navigate("/");
-				window.location.reload();
-				toast.success("Sign In Successfully ✔👏", {
-					className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
-				});
+				toast.success("Sign In Successfully ");
+			} else {
+				toast.error("Sign In Failed");
+				setIsOpen(null);
 			}
 		},
 	});
+
 	return (
 		<>
 			<div className="">

@@ -5,12 +5,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Sign_Up } from "../End points/User";
 import toast from "react-hot-toast";
-import { AddToLocalStorage } from "../hooks/AddToLocalStorage";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import  Cookies  from 'js-cookie';
 
 function SignUpUser({ setIsOpen }) {
 	const [loading, setLoading] = useState(false);
 
+	const { setAuth } = useAuth();
 	const navigate = useNavigate();
 
 	const validationSchema = Yup.object({
@@ -42,28 +44,25 @@ function SignUpUser({ setIsOpen }) {
 		},
 		validationSchema,
 		onSubmit: async (values) => {
-			try {
-				setLoading(true);
-				const res = await Sign_Up(values);
-				if (res.status === "success") {
-					AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
-					AddToLocalStorage(
-						"user",
-						JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
-					);
-					navigate("/");
-					window.location.reload();
-					toast.success("Sign In Successfully ✔👏", {
-						className: "w-[450px] h-[75px] text-2xl p-2 uppperCase",
-					});
+			setLoading(true);
+			const res = await Sign_Up(values);
+			if (res.status === "success") {
+				localStorage.setItem("user", res.data.user);
+				localStorage.setItem("token", res.token);
+				if (typeof Cookies !== "undefined" && res && res.token) {
+					Cookies.set("jwt", res.token);
 				} else {
-					toast.error("Sign Up Failed");
+					console.error(
+						"Cookies library is not loaded or res.token is undefined"
+					);
 				}
-			} catch (error) {
-				console.error(error);
-				toast.error("An error occurred during sign up");
-			} finally {
-				setLoading(false);
+				setAuth(res.data);
+				navigate("/");
+				toast.success("Sign Up Successfully ");
+				setIsOpen(null);
+			} else {
+				setIsOpen(null);
+				toast.error("Sign Up Failed");
 			}
 		},
 	});

@@ -65,14 +65,23 @@ function Profile() {
 				<title>Profile</title>
 				<meta name="description" content="User services blood donor find" />
 			</Helmet>
-			<main className="p-16">
+			<main className="lg:p-16 p-5 lg:mt-0 mt-[56px]">
 				<div className="container mx-auto flex flex-col lg:gap-0 gap-8 py-5 h-full px-4 md:px-0">
 					<Header>Profile</Header>
+					<div className="lg:w-fit w-full flex flex-col justify-center text-center gap-4 mb-10 ">
+						<span className=" flex justify-center items-center rounded-full">
+							<img
+								src="./download.jpeg"
+								className="rounded-full"
+								alt="default"
+							/>
+						</span>
+					</div>
 					<div className="flex lg:flex-row flex-col gap-9 items-center">
 						<div className="lg:w-3/4 w-full">
 							<form
 								onSubmit={formik.handleSubmit}
-								className="flex flex-col justify-evenly gap-7 md:w-2/4 w-full"
+								className="flex flex-col justify-evenly gap-7 lg:w-2/4 w-full"
 							>
 								{!data.profileImage && (
 									<div className="item">
@@ -102,16 +111,6 @@ function Profile() {
 										type={"text"}
 										disabled={true}
 										value={formik.values.email}
-									/>
-								</div>
-								<div className="item">
-									<InputField
-										handleBlur={formik.handleBlur}
-										name={"id"}
-										handleChange={formik.handleChange}
-										type={"text"}
-										disabled={true}
-										value={formik.values.id}
 									/>
 								</div>
 								<div className="item">

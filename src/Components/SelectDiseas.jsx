@@ -39,11 +39,18 @@ function SelectDiseas() {
 			"Cholesterol Level": null,
 		},
 		onSubmit: async (values) => {
-			const {data} = await axios.post(
+			setIsLoading(true);
+			const { data } = await axios.post(
 				"http://16.170.241.232:8000/check",
 				extractValues(values)
 			);
-			console.log(data);
+			setResult(
+				JSON.stringify(data)
+					.slice(2, JSON.stringify(data).length - 2)
+					.replace('"', "")
+					.replace('"', "")
+			);
+			setIsLoading(false);
 		},
 	});
 	return (
@@ -218,18 +225,20 @@ function SelectDiseas() {
 						<div className="flex justify-center">
 							<button
 								type="submit"
-								className="rounded-full bg-primary-600 text-white w-[240px] h-[53px] font-semibold"
+								className={`rounded-full ${
+									isLoading ? "bg-black/25" : "bg-primary-600 "
+								} text-white w-[240px] h-[53px] font-semibold`}
 							>
 								Check Health
 							</button>
 						</div>
 					</form>
 				) : (
-					<div className="flex items-center justify-center h-4/5">
-						<p className="text-4xl text-primary-500 font-bold ">{result}</p>
+					<div className="flex items-center justify-center h-[250px] ">
+						<p className="text-3xl text-black/60 font-bold">{result}</p>
 					</div>
 				)}
-			</div>{" "}
+			</div>
 		</>
 	);
 }

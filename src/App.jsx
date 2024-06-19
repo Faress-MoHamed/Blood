@@ -1,68 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Pages/Layout";
 import SelectType from "./Pages/SelectType";
 import Home from "./Pages/Home";
+import { Toaster } from "react-hot-toast";
+
+import { AuthProvider } from "./Context/AuthProvider";
+import RequireAuth from "./Components/RequireAuth";
 import ServicesUser from "./Pages/ServicesUser";
 import Profile from "./Pages/Profile";
-import { Toaster } from "react-hot-toast";
-import { jwtDecode } from "jwt-decode";
-import { AuthProvider } from "./Context/AuthProvider";
-import ServicesBloodBank from "./Pages/ServicesBloodBank";
-// import ValidationCode from "./Pages/ValidationCode";
+import ServicesBloodBank from './Pages/ServicesBloodBank';
 
 function App() {
-	const [decodedToken, setDecodedToken] = useState(null);
-
-	useEffect(() => {
-		try {
-			const token = window.localStorage.getItem("token");
-			if (token) {
-				const decoded = jwtDecode(token);
-				setDecodedToken(decoded);
-			}
-		} catch (error) {
-			console.log("Failed to decode token", error);
-		}
-	}, []);
-
-	const routes = [
-		{
-			path: "/",
-			element: <Layout />,
-			children: [
-				{
-					index: true,
-					path: "/",
-					element: <Home />,
-				},
-				{
-					path: "/Services",
-					element: decodedToken ? (
-						JSON.parse(window.localStorage.getItem("user"))?.role ===
-						"bloodBank" ? (
-							<ServicesBloodBank />
-						) : (
-							<ServicesUser />
-						)
-					) : (
-						<SelectType />
-					),
-				},
-				{
-					path: "/Profile",
-					element: decodedToken ? <Profile /> : <SelectType />,
-				},
-			],
-		},
-	];
-
-	const router = createBrowserRouter(routes);
-
 	return (
 		<AuthProvider>
 			<Toaster position="top-right" />
-			<RouterProvider router={router} />
+			<BrowserRouter>
+				<Routes>
+					<Route element={<Layout />} path="/">
+						<Route element={<Home />} index={true} path="/" />
+						<Route element={<RequireAuth />} path="/">
+							{
+								JSON.parse(localStorage.getItem("user")).role!=="bloodBank"?
+									<Route element={<ServicesUser />} path="/Services" /> :
+									<Route element={<ServicesBloodBank />} path="/Services" /> 
+									
+							}
+						</Route>
+						<Route element={<RequireAuth />} path="/">
+							<Route element={<Profile />} path="/Profile" />
+						</Route>
+						<Route path="/sign" element={<SelectType />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
 		</AuthProvider>
 	);
 }
