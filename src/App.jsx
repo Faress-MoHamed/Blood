@@ -21,7 +21,7 @@ function App() {
 						<Route element={<Home />} index={true} path="/" />
 						<Route element={<RequireAuth />} path="/">
 							{
-								JSON.parse(localStorage.getItem("user")).role!=="bloodBank"?
+								JSON.parse(localStorage.getItem("user"))?.role!=="bloodBank"?
 									<Route element={<ServicesUser />} path="/Services" /> :
 									<Route element={<ServicesBloodBank />} path="/Services" /> 
 									
