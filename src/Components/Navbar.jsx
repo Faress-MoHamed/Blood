@@ -59,7 +59,11 @@ function NavBar() {
 	}
 
 	useEffect(() => {
-		if (!localStorage.getItem("token") && window.location.pathname !== "/") {
+		if (
+			!localStorage.getItem("token") &&
+			(window.location.pathname !== "/" && window.location.pathname !== "/sign")
+		) {
+			// console.log(window.location.pathname);
 			toast.error("You must be logged in to access this page");
 		}
 	}, [window.location.pathname]);
@@ -117,7 +121,7 @@ function NavBar() {
 						<motion.button
 							onClick={() => {
 								localStorage.clear();
-								window.location.reload();
+								// window.location.reload();
 								setAuth(null);
 							}}
 							className={`relative text-lg bg-primary-400 hover:bg-primary-600 transition-colors duration-300 rounded-full p-2 px-[12px] text-white font-bold  `}

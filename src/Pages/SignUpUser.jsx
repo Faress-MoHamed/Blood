@@ -7,7 +7,7 @@ import { Sign_Up } from "../End points/User";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import  Cookies  from 'js-cookie';
+import Cookies from "js-cookie";
 
 function SignUpUser({ setIsOpen }) {
 	const [loading, setLoading] = useState(false);
@@ -47,7 +47,7 @@ function SignUpUser({ setIsOpen }) {
 			setLoading(true);
 			const res = await Sign_Up(values);
 			if (res.status === "success") {
-				localStorage.setItem("user", res.data.user);
+				localStorage.setItem("user", JSON.stringify(res.data.user));
 				localStorage.setItem("token", res.token);
 				if (typeof Cookies !== "undefined" && res && res.token) {
 					Cookies.set("jwt", res.token);

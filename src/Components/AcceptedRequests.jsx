@@ -14,8 +14,12 @@ function AcceptedRequests({ setIsOpen }) {
 				await Updata_Role_Patient();
 			}
 			const { data } = await Accepted_Requests();
+			console.log(data);
 			setData(data);
-			sessionStorage.setItem("req", JSON.stringify(data));
+			sessionStorage.setItem(
+				"req",
+				data ? JSON.stringify(data) : JSON.stringify({ acceptedRequests: [] })
+			);
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -57,16 +61,22 @@ function AcceptedRequests({ setIsOpen }) {
 					{/**this is for accepted Requsts */}
 					<div className="mt-5">
 						{data?.length !== 0 ? (
-							data?.map((el) => (
-								<div className="flex flex-col gap-3">
+							data?.map((el, index) => (
+								<div key={index} className="flex flex-col gap-3">
 									<DonationCard
-										ReqId={el?._id}
-										donorid={el?.donor}
+										DonorEmail={el?.donor?.email}
+										DonorLocation={el?.donor?.location?.address}
+										DonorName={el?.donor?.username}
+										PatientEmail={el?.patient?.email}
+										PatientLocation={el?.patient?.location?.address}
+										PatientName={el?.patient?.username}
 										status={el?.status}
 									/>
-									<div className="flex justify-center items-center">
-										<div className="bg-black/75 h-[2px] w-[80%] text-center"></div>
-									</div>
+									{data?.length !== 1 && (
+										<div className="flex justify-center items-center">
+											<div className="bg-black/75 h-[2px] w-[80%] text-center"></div>
+										</div>
+									)}
 								</div>
 							))
 						) : (

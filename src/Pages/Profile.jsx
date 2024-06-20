@@ -13,6 +13,7 @@ import { DNA } from "react-loader-spinner";
 function Profile() {
 	const [openModal, setOpenModal] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [verifyWait, setverifyWait] = useState(false);
 	const handleClose = () => setOpenModal("");
 	const data = JSON.parse(localStorage.getItem("user")) || {};
 	const handleUploadPhoto = async () => {
@@ -20,6 +21,7 @@ function Profile() {
 			const formData = new FormData();
 			formData.append("profileImage", formik.values.profileImage);
 			try {
+				setLoading(true);
 				const { data } = await UploadPhoto(formData);
 				let existingUserData = JSON.parse(localStorage.getItem("user"));
 				if (!existingUserData) {
@@ -32,6 +34,8 @@ function Profile() {
 				localStorage.setItem("user", JSON.stringify(updatedUserData));
 			} catch (error) {
 				console.error(error);
+			} finally {
+				setLoading(false);
 			}
 		}
 	};
@@ -44,7 +48,6 @@ function Profile() {
 			verified: data.validate || "",
 			username: data.username || "",
 		},
-		onSubmit: async (values) => {},
 	});
 
 	const handleFileChange = (event) => {
@@ -53,9 +56,9 @@ function Profile() {
 	};
 
 	const handleSendVerificationCode = async () => {
-		setLoading(true);
+		setverifyWait(true);
 		await Send_verification_code();
-		setLoading(false);
+		setverifyWait(false);
 		setOpenModal("");
 	};
 
@@ -65,13 +68,17 @@ function Profile() {
 				<title>Profile</title>
 				<meta name="description" content="User services blood donor find" />
 			</Helmet>
-			<main className="lg:p-16 p-5 lg:mt-0 mt-[56px]">
+			<main className="lg:p-16 p-0 lg:mt-0 mt-[56px]">
 				<div className="container mx-auto flex flex-col lg:gap-0 gap-8 py-5 h-full px-4 md:px-0">
 					<Header>Profile</Header>
-					<div className="lg:w-fit w-full flex flex-col justify-center text-center gap-4 mb-10 ">
+					<div className=" w-[250px] flex flex-col justify-center text-center gap-4 mb-10 ">
 						<span className=" flex justify-center items-center rounded-full">
 							<img
-								src="./download.jpeg"
+								src={`${
+									data.profileImage
+										? `https://blood-donation-system-api.onrender.com${data?.profileImage}`
+										: "./download.jpeg"
+								}`}
 								className="rounded-full"
 								alt="default"
 							/>
@@ -138,10 +145,15 @@ function Profile() {
 						<div className="lg:w-1/4 w-full flex flex-col gap-12">
 							{formik.values.profileImage && !data.profileImage && (
 								<button
+									disabled={loading}
 									onClick={handleUploadPhoto}
-									className="rounded-full bg-primary-600 hover:bg-primary-700 duration-300 transition-colors text-white lg:w-[240px] h-[53px] font-semibold"
+									className={`rounded-full ${
+										loading
+											? "bg-black/50"
+											: " bg-primary-600 hover:bg-primary-700 duration-300 transition-colors"
+									}  text-white lg:w-[240px] h-[53px] font-semibold`}
 								>
-									Upload Image
+									{loading ? "Loading.." : "Upload Image"}
 								</button>
 							)}
 							<button
@@ -180,28 +192,18 @@ function Profile() {
 					<ValidationCodeModal setIsOpen={setOpenModal} />
 				</Modal>
 			)}
-			{loading && (
+			{verifyWait && (
 				<Modal handleClose={handleClose}>
-					<motion.main
-						initial={{ top: -100 }}
-						animate={{ top: 0 }}
-						exit={{ top: -100 }}
-						transition={{ duration: 0.5, type: "spring" }}
-						className="signUpUser shadow-2xl bg-white relative overflow-y-auto flex justify-center"
-					>
-						<div className="container w-[700px] p-8">
-							<div className="flex items-center justify-center h-4/5">
-								<DNA
-									visible={true}
-									height="80"
-									width="80"
-									ariaLabel="dna-loading"
-									wrapperStyle={{}}
-									wrapperClass="dna-wrapper"
-								/>
-							</div>
-						</div>
-					</motion.main>
+					<div className="flex items-center justify-center h-4/5">
+						<DNA
+							visible={true}
+							height="80"
+							width="80"
+							ariaLabel="dna-loading"
+							wrapperStyle={{}}
+							wrapperClass="dna-wrapper"
+						/>
+					</div>
 				</Modal>
 			)}
 		</>

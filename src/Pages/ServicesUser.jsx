@@ -18,12 +18,12 @@ function ServicesUser() {
 				<title>Services.</title>
 				<meta name="description" content="User services blood donor find" />
 			</Helmet>
-			<main className="overflow-x-hidden lg:mt-0 mt-[66px] lg:p-16 p-8">
+			<main className="overflow-x-hidden lg:mt-0 mt-[66px] lg:p-16 p-0">
 				<div className="container mx-auto flex flex-col items-center lg:gap-0 gap-8 py-5 justify-center h-full px-4 md:px-0">
 					<div className="self-start w-full">
 						<Header>Donation blood</Header>
 					</div>
-					<div className="flex lg:flex-row flex-col gap-8 lg:px-8">
+					<div className="flex lg:flex-row flex-col gap-8 p-0 lg:px-8">
 						<motion.div
 							initial={{ opacity: 0, x: 100 }}
 							transition={{
@@ -89,7 +89,7 @@ function ServicesUser() {
 							</div>
 						</motion.div>
 					</div>
-					<div className="flex lg:flex-row flex-col gap-8 lg:px-8">
+					<div className="flex lg:flex-row flex-col gap-8 p-0 lg:px-8">
 						<motion.div
 							initial={{ opacity: 0, x: 100 }}
 							transition={{

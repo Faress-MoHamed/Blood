@@ -28,7 +28,7 @@ function RequestCard({
 		<div className="flex justify-between items-center lg:text-base text-sm">
 			<div className="flex flex-col gap-1">
 				<div className="donorName">Donor Name: Fares</div>
-				<div className="donorId">Donor ID: {donorid || ""}</div>
+				<div className="donorId">user ID: {donorid || ""}</div>
 				<div className="ReqId">Request ID: {ReqId || ""}</div>
 				<div className="flex justify-between items-center">
 					<button

@@ -6,6 +6,7 @@ import { Sign_In } from "../End points/User";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import useAuth from "./../hooks/useAuth";
+import setCookie from "../hooks/SetCookie";
 
 function SignIn({ setIsOpen }) {
 	const [loading, setLoading] = useState(false);
@@ -38,6 +39,7 @@ function SignIn({ setIsOpen }) {
 				localStorage.setItem("user", JSON.stringify(res.data.user));
 				localStorage.setItem("token", res.token);
 				setAuth(res.data);
+				setCookie("jwt", res.token, 1);
 				// console.log("UserAuth:", UserAuth);
 				// console.log("TokenAuth:", TokenAuth);
 				navigate("/");

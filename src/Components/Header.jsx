@@ -10,7 +10,7 @@ function Header({ children, sizelg, sizesm }) {
 			>
 				{children}
 			</h2>
-			<div className="h-[2px] md:w-6/12 w-11/12 bg-black"></div>
+			{/* <div className="h-[2px] md:w-6/12 w-11/12 bg-black"></div> */}
 		</div>
 	);
 }

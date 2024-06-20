@@ -21,7 +21,7 @@ function SearchNearstDonors({ setIsOpen }) {
 	const [error, setError] = useState(null);
 	const [select, setSelected] = useState([]);
 	let req = JSON.stringify(sessionStorage.getItem("req") || {});
-	console.log(req);
+	console.log(req === "[]");
 	const handleRequestSend = async () => {
 		setLoading(true);
 		await Send_Request_to_donor(select, select.at(0));
@@ -42,9 +42,9 @@ function SearchNearstDonors({ setIsOpen }) {
 		const data = await Search_Nearest_Donors(values);
 		console.log(data);
 		if (data?.nearestDonors) {
-			setResult(data.nearestDonors);
+			setResult(data?.nearestDonors);
 			setLoading(false);
-		} else if (data.response.data.message) {
+		} else if (data?.response?.data?.message) {
 			setError(data.response.data.message);
 			setLoading(false);
 		}
@@ -72,7 +72,7 @@ function SearchNearstDonors({ setIsOpen }) {
 			handleSubmit(values);
 		},
 	});
-	return req !== "[]" ? (
+	return !sessionStorage.getItem("req") ? (
 		<>
 			<div className="text-[10px]">
 				<Header sizelg={"2xl"} sizesm={"xl"}>
@@ -114,11 +114,11 @@ function SearchNearstDonors({ setIsOpen }) {
 						</button>
 					</div>
 					<div className="flex flex-col gap-5 p-4 overflow-y-auto h-[60%]">
-						{result.map((el) => (
+						{result.map((el, index) => (
 							<DonorCard
 								email={el.email}
 								location={el.location}
-								key={el.email}
+								key={index}
 								id={el._id}
 								setSelected={setSelected}
 								select={select}

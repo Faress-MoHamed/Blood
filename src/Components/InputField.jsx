@@ -50,7 +50,7 @@ function InputField({
 			<div className="relative">
 				<input
 					type={!pass ? type : visible ? "text" : "password"}
-					min={0}
+					// min={0}
 					max={!!max ? max : undefined}
 					id={name.split(" ").join("")}
 					className="placeholder:text-base placeholder:text-[#111111]/40 border py-[15px] px-[24px] caret-[#FF0000] focus:outline-none border-[#5E5E5E]/35 rounded-[12px] h-[56px] w-full"

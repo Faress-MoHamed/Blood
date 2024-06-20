@@ -25,25 +25,19 @@ function ResetPassword({ setIsOpen }) {
 			setLoading(false);
 			console.log(res);
 			if (res.status === "success") {
-				// AddToLocalStorage("token", res.token, 90 * 24 * 60 * 60 * 1000);
-				// AddToLocalStorage(
-				// 	"user",
-				// 	JSON.stringify(res.data.user, 90 * 24 * 60 * 60 * 1000)
-				// );
 				navigate("/");
-				// window.location.reload();
-				toast.success("Sign In Successfully");
+				toast.success("Reset Successfully");
 			}
 		},
 	});
 	return (
 		<>
-			<div className="container w-[700px] p-8">
 				<div className="">
 					<Header sizelg={"3xl"} sizesm={"lg"}>
 						Reset Password
 					</Header>
-				</div>
+			</div>
+			{/* */}
 				<form
 					onSubmit={formik.handleSubmit}
 					className="flex flex-col gap-6 p-5"
@@ -88,7 +82,6 @@ function ResetPassword({ setIsOpen }) {
 						</button>
 					</div>
 				</form>
-			</div>
 		</>
 	);
 }

@@ -304,6 +304,14 @@ export const UploadPhoto = async (values) => {
 				Authorization: `Bearer ${localStorage.getItem("token")}`,
 			},
 		});
+		const existingUser = JSON.parse(localStorage.getItem("user")) || {};
+		const updatedUser = {
+			...existingUser,
+			...data,
+		};
+
+		// Save the updated user data back to localStorage
+		localStorage.setItem("user", JSON.stringify(updatedUser));
 		return data;
 	} catch (error) {
 		// console.log(error.response.data.message.message);

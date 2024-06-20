@@ -43,7 +43,7 @@ export default function Modal({ handleClose, children }) {
 						>
 							<IoIosCloseCircle className="w-7 h-7 hover:text-black/70 duration-300" />
 						</button>
-						<div className="w-full p-8">{children}</div>
+						<div className="w-full p-3 lg:p-8">{children}</div>
 					</motion.main>
 				</div>
 			</div>

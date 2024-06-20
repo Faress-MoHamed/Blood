@@ -22,14 +22,14 @@ function Home() {
 							Connecting Communities,
 							<br /> Improving Healthcare, Changing Lives
 						</h2>
-						<p className="md:w-[90%]  w-full text-center font-semibold text-xl text-white">
+						<p className="md:w-[90%]  w-full text-center font-light text-xl text-white">
 							Egyptian's Blood Centers is the national association of
 							independent, community blood centers dedicated to providing a safe
 							and available blood supply for every patient in need.
 						</p>
 					</div>
 				</section>
-				<section className="p-10 py-14 flex justify-between items-center ">
+				<section className="lg:p-10 p-0 py-14 flex justify-between items-center ">
 					<div className="container mx-auto flex flex-col lg:flex-row py-4 gap-11 lg:items-center h-full px-4 md:px-0">
 						<div className="flex items-center gap-10 w-full lg:w-2/4">
 							<div className="w-[350px] hidden lg:block">
@@ -81,7 +81,7 @@ function Home() {
 						</div>
 					</div>
 				</section>
-				<section className="p-10 flex justify-between items-center overflow-hidden">
+				<section className="lg:p-10 p-0 flex justify-between items-center overflow-hidden">
 					<div className="container mx-auto flex flex-col lg:flex-row py-4 gap-11 lg:items-center h-full px-4 md:px-0">
 						<div className="flex flex-col gap-8">
 							<motion.div
