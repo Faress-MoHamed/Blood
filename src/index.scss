@@ -16,10 +16,8 @@
 	height: 80vh;
 	
 }
-main:not(.signIn, .signUpBlood, .signUpUser, .selected-type) {
-	// padding-top: calc(60px + 56px);
-	// height: 100vh;
-}
+
+
 $scrollbar-width: 8px;
 $scrollbar-bg: #ccc;
 $scrollbar-thumb-bg: #888;

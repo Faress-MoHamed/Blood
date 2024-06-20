@@ -61,7 +61,8 @@ function NavBar() {
 	useEffect(() => {
 		if (
 			!localStorage.getItem("token") &&
-			(window.location.pathname !== "/" && window.location.pathname !== "/sign")
+			window.location.pathname !== "/" &&
+			window.location.pathname !== "/sign"
 		) {
 			// console.log(window.location.pathname);
 			toast.error("You must be logged in to access this page");
@@ -110,13 +111,7 @@ function NavBar() {
 					})}
 				</ul>
 				<div className="flex items-center gap-10">
-					<button
-						aria-label="show bars"
-						onClick={() => handleOpen()}
-						className="block md:text-3xl text-2xl text-black lg:hidden"
-					>
-						<i className="fa-solid fa-bars" />
-					</button>
+					{" "}
 					{localStorage.getItem("token") && (
 						<motion.button
 							onClick={() => {
@@ -129,6 +124,13 @@ function NavBar() {
 							Logout
 						</motion.button>
 					)}
+					<button
+						aria-label="show bars"
+						onClick={() => handleOpen()}
+						className="block md:text-3xl text-2xl text-black lg:hidden"
+					>
+						<i className="fa-solid fa-bars" />
+					</button>
 				</div>
 			</nav>
 			{
