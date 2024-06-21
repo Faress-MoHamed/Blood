@@ -25,8 +25,6 @@ function RequestCard({
 		setLoadingDenied(true);
 		const data = await Updata_Request(ReqId, "Denied");
 		setLoadingDenied(false);
-		// data.message && toast.success(data.message);
-		console.log(data)
 		data && setIsOpen(null);
 	};
 	return (

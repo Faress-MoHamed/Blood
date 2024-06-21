@@ -8,6 +8,9 @@ export const AxiosHandler = axios.create({
 		return status >= 200 && status < 400;
 	},
 	headers: {
+		"Cache-Control": "no-cache",
+		Pragma: "no-cache",
+		Expires: "0",
 		Authorization: `Bearer ${localStorage.getItem("token")}`,
 	},
 });

@@ -106,9 +106,12 @@ function SignIn({ setIsOpen }) {
 				<div className="flex justify-center">
 					<p>
 						Don’t Have An Account?{" "}
-						<Link className="text-primary-600" to={"/"}>
+						<button
+							onClick={() => setIsOpen("user")}
+							className="text-primary-600"
+						>
 							sign up
-						</Link>
+						</button>
 					</p>
 				</div>
 			</form>
