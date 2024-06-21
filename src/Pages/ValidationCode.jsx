@@ -41,9 +41,9 @@ function ValidationCode() {
 			<div className="text-center pb-6">
 				<p>
 					if you don't recive any Code yet{" "}
-					<span className="text-primary-400 cursor-pointer hover:underline">
+					<button onClick={async()=>{await Send_verification_code();set}} className="text-primary-400 cursor-pointer hover:underline">
 						Click here!
-					</span>
+					</button>
 				</p>
 			</div>
 			<div className="text-center">

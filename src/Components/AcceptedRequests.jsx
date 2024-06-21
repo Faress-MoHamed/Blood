@@ -10,7 +10,7 @@ function AcceptedRequests({ setIsOpen }) {
 	const fetchData = async () => {
 		setIsLoading(true);
 		try {
-			if (JSON.parse(localStorage.getItem("user")).role === "donor") {
+			if (JSON.parse(localStorage.getItem("user"))?.role === "donor") {
 				await Updata_Role_Patient();
 			}
 			const { data } = await Accepted_Requests();

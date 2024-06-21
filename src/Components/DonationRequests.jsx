@@ -75,12 +75,17 @@ function DonationRequests({ setIsOpen }) {
 						{data.map((el, index) => (
 							<div className="mt-5" key={el._id}>
 								<RequestCard
+									ReqId={el?._id}
 									SetId={handleRequestClick}
 									setIsOpen={setIsOpen}
-									ReqId={el._id}
-									donorid={el.donor}
-									status={el.status}
-									donationCheck={el.donationCheck}
+									donationCheck={el?.donationCheck}
+									DonorEmail={el?.donor?.email}
+									DonorLocation={el?.donor?.location?.address}
+									DonorName={el?.donor?.username}
+									PatientEmail={el?.patient?.email}
+									PatientLocation={el?.patient?.location?.address}
+									PatientName={el?.patient?.username}
+									status={el?.status}
 								/>
 								{index !== data.length - 1 && (
 									<div className="flex justify-center items-center my-5">

@@ -1,9 +1,7 @@
 import { useRef, useState } from "react";
-import { IoIosCloseCircle } from "react-icons/io";
-import { motion } from "framer-motion";
 import Header from "./Header";
 import { useFormik } from "formik";
-import { Verify_Email } from "../End points/User";
+import { Send_verification_code, Verify_Email } from "../End points/User";
 
 function ValidationCodeModal({ setIsOpen }) {
 	const [loading, setLoading] = useState(false);
@@ -18,7 +16,7 @@ function ValidationCodeModal({ setIsOpen }) {
 			setLoading(true);
 			const code = values.code.join("");
 			const res = await Verify_Email({ verificationCode: code });
-			if (res === "congrats now your Account  is verfied ") {
+			if (res) {
 				const existingUser = JSON.parse(localStorage.getItem("user")) || {};
 
 				// Update the user data with the new role
@@ -96,9 +94,15 @@ function ValidationCodeModal({ setIsOpen }) {
 			<div className="text-center pb-6">
 				<p>
 					If you don't receive any code yet{" "}
-					<span className="text-primary-400 cursor-pointer hover:underline">
+					<button
+						onClick={async () => {
+							await Send_verification_code();
+							setIsOpen(null);
+						}}
+						className="text-primary-400 cursor-pointer hover:underline"
+					>
 						Click here!
-					</span>
+					</button>
 				</p>
 			</div>
 		</>

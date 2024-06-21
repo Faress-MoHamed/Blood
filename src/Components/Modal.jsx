@@ -28,7 +28,7 @@ export default function Modal({ handleClose, children }) {
 				onClick={closeHandler}
 				className="left-0 top-0 h-full z-20 fixed inset-0 overflow-hidden bg-black bg-opacity-50"
 			></div>
-			<div className="flex justify-center items-center fixed inset-0 h-full z-40 lg:w-[600px] w-[90%] left-2/4 top-2/4 translate-x-[-50%] translate-y-[-50%]">
+			<div className="flex justify-center items-center fixed inset-0 h-full z-40 md:w-[600px] w-[90%] left-2/4 top-2/4 translate-x-[-50%] translate-y-[-50%]">
 				<div className="relative z-50 w-full  flex justify-center items-center">
 					<motion.main
 						initial={{ top: -100, opacity: 0 }}

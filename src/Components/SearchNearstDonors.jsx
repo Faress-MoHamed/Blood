@@ -20,11 +20,11 @@ function SearchNearstDonors({ setIsOpen }) {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [select, setSelected] = useState([]);
-	let req = JSON.stringify(sessionStorage.getItem("req") || {});
-	console.log(req === "[]");
+	// let req = JSON.stringify(sessionStorage.getItem("req") || {});
+	// console.log(req === "[]");
 	const handleRequestSend = async () => {
 		setLoading(true);
-		await Send_Request_to_donor(select, select.at(0));
+		await Send_Request_to_donor(select);
 		setLoading(false);
 		setIsOpen("AcceptedRequests");
 	};

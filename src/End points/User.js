@@ -63,7 +63,7 @@ export const Send_verification_code = async (values) => {
 	try {
 		const token = getCookie("jwt");
 
-		await AxiosHandler.post(
+		const data = await AxiosHandler.post(
 			"user/sendVerficationCode",
 			{},
 			{
@@ -72,18 +72,19 @@ export const Send_verification_code = async (values) => {
 				},
 			}
 		);
+		console.log(data);
 		toast.success("Code sended succussfully");
 	} catch (err) {
 		toast.error(err?.response?.data?.message || "Un expected Error");
 	}
 };
 
-export const Send_Request_to_donor = async (values, id) => {
+export const Send_Request_to_donor = async (values) => {
 	try {
 		const token = getCookie("jwt");
 		await AxiosHandler.post(
-			`user/patient/requestDonations/${id}`,
-			{ doners: values },
+			`user/patient/requestDonations/`,
+			{ donors: values },
 			{
 				headers: {
 					Authorization: `Bearer ${token}`, // Use the token from the cookie
@@ -216,7 +217,7 @@ export const Updata_Role_Patient = async () => {
 };
 export const Updata_Request = async (id, status) => {
 	try {
-		const data = await AxiosHandler.post(
+		const { data } = await AxiosHandler.post(
 			`user/donor/updateRequest/${id}/${status}`,
 			{},
 			{
@@ -225,7 +226,10 @@ export const Updata_Request = async (id, status) => {
 				},
 			}
 		);
-		data.status === "error" && toast.error(data.message);
+		data.message === "error"
+			? toast.error(data.message)
+			: toast.success(data?.message);
+
 		return data;
 	} catch (err) {
 		toast.error(err?.response?.data?.message || "Un expected Error");

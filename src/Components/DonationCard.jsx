@@ -7,15 +7,6 @@ function DonationCard({
 	DonorLocation,
 	status,
 }) {
-	console.log(
-		PatientName,
-		PatientEmail,
-		PatientLocation,
-		DonorName,
-		DonorEmail,
-		DonorLocation,
-		status
-	);
 	return (
 		<div className= "w-full bg-white rounded-lg overflow-hidden ">
 			<div className="p-4">
