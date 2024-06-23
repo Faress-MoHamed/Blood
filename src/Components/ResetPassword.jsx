@@ -21,6 +21,7 @@ function ResetPassword({ setIsOpen }) {
 		validationSchema,
 		onSubmit: async (values) => {
 			setLoading(true);
+			setIsOpen("Reset")
 			const res = await Reset_password(values);
 			setLoading(false);
 			console.log(res);

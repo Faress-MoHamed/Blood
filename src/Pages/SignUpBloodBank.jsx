@@ -41,30 +41,31 @@ function SignUpBloodBank({ setIsOpen }) {
 			confirmPassword: "",
 			country: "",
 			address: "",
+			bloodBankName: "",
 		},
 		validationSchema,
 		onSubmit: async (values) => {
 			try {
 				setLoading(true);
 				const res = await Sign_Up({ ...values, role: "bloodBank" });
-			if (res.status === "success") {
-				localStorage.setItem("user", JSON.stringify(res.data.user));
-				localStorage.setItem("token", res.token);
-				if (typeof Cookies !== "undefined" && res && res.token) {
-					Cookies.set("jwt", res.token);
+				if (res.status === "success") {
+					localStorage.setItem("user", JSON.stringify(res.data.user));
+					localStorage.setItem("token", res.token);
+					if (typeof Cookies !== "undefined" && res && res.token) {
+						Cookies.set("jwt", res.token);
+					} else {
+						console.error(
+							"Cookies library is not loaded or res.token is undefined"
+						);
+					}
+					setAuth(res.data);
+					navigate("/");
+					toast.success("Sign Up Successfully ");
+					setIsOpen(null);
 				} else {
-					console.error(
-						"Cookies library is not loaded or res.token is undefined"
-					);
+					setIsOpen(null);
+					toast.error("Sign Up Failed");
 				}
-				setAuth(res.data);
-				navigate("/");
-				toast.success("Sign Up Successfully ");
-				setIsOpen(null);
-			} else {
-				setIsOpen(null);
-				toast.error("Sign Up Failed");
-			}
 			} catch (error) {
 				console.error(error);
 				toast.error("An error occurred during sign up");
@@ -91,6 +92,22 @@ function SignUpBloodBank({ setIsOpen }) {
 					<div className="ml-2">
 						{formik.touched.username && formik.errors.username ? (
 							<div className="text-red-600/80">{formik.errors.username}</div>
+						) : null}
+					</div>
+				</div>
+				<div className="flex flex-col w-full">
+					<div className="sides w-full md:flex-row flex-col gap-5 flex justify-between items-center">
+						<InputField
+							name={"bloodBankName"}
+							type={"text"}
+							value={formik.values.bloodBankName}
+							handleChange={formik.handleChange}
+							handleBlur={formik.handleBlur}
+						/>
+					</div>
+					<div className="ml-2">
+						{formik.touched.bloodBankName && formik.errors.bloodBankName ? (
+							<div className="text-red-600/80">{formik.errors.bloodBankName}</div>
 						) : null}
 					</div>
 				</div>

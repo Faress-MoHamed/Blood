@@ -29,9 +29,11 @@ export const Reset_password = async (values) => {
 
 export const Forget_Password = async (values) => {
 	try {
-		const { data } = await AxiosHandler.post("user/forgotPassword", values);
-		toast.success("reset Code sent to email!");
-		return data;
+		const {
+			data: { message },
+		} = await AxiosHandler.post("user/forgotPassword", values);
+		toast.success(message);
+		return message;
 	} catch (err) {
 		console.log(err);
 
@@ -78,12 +80,11 @@ export const Send_verification_code = async (values) => {
 		toast.error(err?.response?.data?.message || "Un expected Error");
 	}
 };
-
 export const Send_Request_to_donor = async (values) => {
 	try {
 		const token = getCookie("jwt");
 		await AxiosHandler.post(
-			`user/patient/requestDonations/`,
+			`user/patient/requestDonations`,
 			{ donors: values },
 			{
 				headers: {

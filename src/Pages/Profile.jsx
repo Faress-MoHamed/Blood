@@ -9,6 +9,7 @@ import ResetPassword from "../Components/ResetPassword";
 import ValidationCodeModal from "../Components/ValidationCodeModal";
 import { Send_verification_code, UploadPhoto } from "../End points/User";
 import { DNA } from "react-loader-spinner";
+import ResetByEmail from "../Components/ResetByEmail";
 
 function Profile() {
 	const [openModal, setOpenModal] = useState("");
@@ -47,6 +48,7 @@ function Profile() {
 			address: data.location?.address || "",
 			verified: data.validate || "",
 			username: data.username || "",
+			role: data.role || "",
 		},
 	});
 
@@ -113,6 +115,16 @@ function Profile() {
 								<div className="item">
 									<InputField
 										handleBlur={formik.handleBlur}
+										name={"role"}
+										handleChange={formik.handleChange}
+										type={"text"}
+										disabled={true}
+										value={formik.values.role}
+									/>
+								</div>
+								<div className="item">
+									<InputField
+										handleBlur={formik.handleBlur}
 										name={"email"}
 										handleChange={formik.handleChange}
 										type={"text"}
@@ -157,7 +169,7 @@ function Profile() {
 								</button>
 							)}
 							<button
-								onClick={() => setOpenModal("Reset")}
+								onClick={() => setOpenModal("ResetByEmail")}
 								className="rounded-full bg-primary-600 hover:bg-primary-700 duration-300 transition-colors text-white lg:w-[240px] h-[53px] font-semibold"
 							>
 								Reset Password
@@ -190,6 +202,11 @@ function Profile() {
 			{openModal === "verifyEmail" && (
 				<Modal handleClose={handleClose}>
 					<ValidationCodeModal setIsOpen={setOpenModal} />
+				</Modal>
+			)}
+			{openModal === "ResetByEmail" && (
+				<Modal handleClose={handleClose}>
+					<ResetByEmail email={data?.email} setIsOpen={setOpenModal} />
 				</Modal>
 			)}
 			{verifyWait && (

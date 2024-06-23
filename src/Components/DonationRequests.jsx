@@ -85,6 +85,8 @@ function DonationRequests({ setIsOpen }) {
 									PatientEmail={el?.patient?.email}
 									PatientLocation={el?.patient?.location?.address}
 									PatientName={el?.patient?.username}
+									CampName={el?.donationCamp?.username}
+									CampEmail={el?.donationCamp?.email}
 									status={el?.status}
 								/>
 								{index !== data.length - 1 && (

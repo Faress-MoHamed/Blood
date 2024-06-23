@@ -41,7 +41,7 @@ function SelectDiseas() {
 		onSubmit: async (values) => {
 			setIsLoading(true);
 			const { data } = await axios.post(
-				"http://16.170.241.232:8000/check",
+				"http://127.0.0.1:8000/check",
 				extractValues(values)
 			);
 			setResult(
