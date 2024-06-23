@@ -14,8 +14,7 @@ function AcceptedRequests({ setIsOpen }) {
 				await Updata_Role_Patient();
 			}
 			const { data } = await Accepted_Requests();
-			console.log(data);
-			setData(data);
+			setData(data.reverse());
 			sessionStorage.setItem(
 				"req",
 				data ? JSON.stringify(data) : JSON.stringify({ acceptedRequests: [] })
@@ -26,6 +25,7 @@ function AcceptedRequests({ setIsOpen }) {
 			setIsLoading(false);
 		}
 	};
+
 	useEffect(() => {
 		fetchData();
 	}, []);
@@ -56,6 +56,15 @@ function AcceptedRequests({ setIsOpen }) {
 							className="font-semibold bg-black/15 hover:bg-black/25 text-black  hover:underline p-2 rounded-full  duration-300 transition-colors"
 						>
 							Refresh
+						</button>
+						<button
+							onClick={() => {
+								sessionStorage.clear();
+								setIsOpen(null);
+							}}
+							className="font-semibold bg-black/15 hover:bg-black/25 text-black  hover:underline p-2 rounded-full  duration-300 transition-colors"
+						>
+							Cancel Request
 						</button>
 					</div>{" "}
 					{/**this is for accepted Requsts */}

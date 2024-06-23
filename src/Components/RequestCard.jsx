@@ -12,6 +12,8 @@ function RequestCard({
 	DonorName,
 	DonorEmail,
 	DonorLocation,
+	CampName,
+	campDate,
 }) {
 	const [loadingAccept, setLoadingAccept] = useState(false);
 	const [loadingDenied, setLoadingDenied] = useState(false);
@@ -32,18 +34,26 @@ function RequestCard({
 			<div className="w-full bg-white rounded-lg overflow-hidden ">
 				<div className="p-4">
 					<h2 className="text-2xl font-semibold text-gray-800">
-						Patient Details
+						{CampName ? "Camp Details" : "Patient Details"}
 					</h2>
 					<div className="mt-3">
 						<p>
-							<span className="font-medium">Name:</span> {PatientName}
+							<span className="font-medium">
+								{CampName ? "Camp Name:" : "Name:"}
+							</span>{" "}
+							{PatientName || CampName}
 						</p>
 						<p>
-							<span className="font-medium">Email:</span> {PatientEmail}
+							<span className="font-medium">
+								{campDate ? "Date:" : "Email:"}
+							</span>{" "}
+							{PatientEmail || campDate}
 						</p>
-						<p>
-							<span className="font-medium">Location:</span> {PatientLocation}
-						</p>
+						{!CampName && (
+							<p>
+								<span className="font-medium">Location:</span> {PatientLocation}
+							</p>
+						)}
 					</div>
 				</div>
 				<div className="border-t p-4">

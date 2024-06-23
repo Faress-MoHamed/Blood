@@ -116,6 +116,7 @@ function NavBar() {
 						<motion.button
 							onClick={() => {
 								localStorage.clear();
+								sessionStorage.clear();
 								setAuth(null);
 							}}
 							className={`relative text-lg bg-primary-400 hover:bg-primary-600 transition-colors duration-300 rounded-full p-2 px-[12px] text-white font-bold  `}

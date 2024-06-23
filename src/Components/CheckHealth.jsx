@@ -11,20 +11,20 @@ const CheckHealth = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [result, setResult] = useState(null);
 	const initialValues = {
-		WBC: 10,
-		LYMP: 15,
-		NEUTp: 30,
-		LYMn: 5,
-		NEUTn: 2,
-		RBC: 3,
-		HGB: 12,
-		HCT: 30,
-		MCV: 25,
-		MCH: 25,
-		MCHC: 25,
-		PLT: 150,
-		PDW: 12,
-		PCT: 0.21,
+		WBC: "",
+		LYMP: "",
+		NEUTp: "",
+		LYMn: "",
+		NEUTn: "",
+		RBC: "",
+		HGB: "",
+		HCT: "",
+		MCV: "",
+		MCH: "",
+		MCHC: "",
+		PLT: "",
+		PDW: "",
+		PCT: "",
 	};
 
 	const validationSchema = Yup.object({

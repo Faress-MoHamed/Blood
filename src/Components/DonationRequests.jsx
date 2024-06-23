@@ -59,7 +59,7 @@ function DonationRequests({ setIsOpen }) {
 					>
 						Refresh
 					</button>
-					{isLoading && (
+					{isLoading ? (
 						<div className="flex items-center justify-center h-4/5">
 							<DNA
 								visible={true}
@@ -70,33 +70,34 @@ function DonationRequests({ setIsOpen }) {
 								wrapperClass="dna-wrapper"
 							/>
 						</div>
+					) : (
+						<div className="py-4">
+							{data.map((el, index) => (
+								<div className="mt-5" key={el._id}>
+									<RequestCard
+										ReqId={el?._id}
+										SetId={handleRequestClick}
+										setIsOpen={setIsOpen}
+										donationCheck={el?.donationCheck}
+										DonorEmail={el?.donor?.email}
+										DonorLocation={el?.donor?.location?.address}
+										DonorName={el?.donor?.username}
+										PatientEmail={el?.patient?.email}
+										PatientLocation={el?.patient?.location?.address}
+										PatientName={el?.patient?.username}
+										CampName={el?.donationCamp?.name}
+										campDate={el?.donationCamp?.date}
+										status={el?.status}
+									/>
+									{index !== data.length - 1 && (
+										<div className="flex justify-center items-center my-5">
+											<div className="bg-black/75 h-[2px] w-[80%] text-center"></div>
+										</div>
+									)}
+								</div>
+							))}
+						</div>
 					)}
-					<div className="py-4">
-						{data.map((el, index) => (
-							<div className="mt-5" key={el._id}>
-								<RequestCard
-									ReqId={el?._id}
-									SetId={handleRequestClick}
-									setIsOpen={setIsOpen}
-									donationCheck={el?.donationCheck}
-									DonorEmail={el?.donor?.email}
-									DonorLocation={el?.donor?.location?.address}
-									DonorName={el?.donor?.username}
-									PatientEmail={el?.patient?.email}
-									PatientLocation={el?.patient?.location?.address}
-									PatientName={el?.patient?.username}
-									CampName={el?.donationCamp?.username}
-									CampEmail={el?.donationCamp?.email}
-									status={el?.status}
-								/>
-								{index !== data.length - 1 && (
-									<div className="flex justify-center items-center my-5">
-										<div className="bg-black/75 h-[2px] w-[80%] text-center"></div>
-									</div>
-								)}
-							</div>
-						))}
-					</div>
 				</>
 			)}
 		</>

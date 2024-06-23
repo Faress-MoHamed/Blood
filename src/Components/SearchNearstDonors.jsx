@@ -56,8 +56,11 @@ function SearchNearstDonors({ setIsOpen }) {
 		bloodGroup: Yup.string()
 			.matches(/^(A|B|AB|O)[+-]$/, "Invalid bloodGroup")
 			.required("bloodGroup is required"),
-		bloodUnits: Yup.number().min(1).max(10).required("bloodUnits is required"),
-		// nationalId: Yup.string().length(12).required("nationalId is required"),
+		bloodUnits: Yup.number()
+			.min(1, "the min blood Units is 1")
+			.max(15, "the max blood Units is 15")
+			.required("bloodUnits is required"),
+		nationalId: Yup.string().length(14).required("nationalId is required"),
 	});
 	const formik = useFormik({
 		initialValues: {
